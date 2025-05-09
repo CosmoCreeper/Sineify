@@ -1,1 +1,16 @@
-
+{
+    "id": "natsumi-browser",
+    "name": "Natsumi Browser",
+    "description": "A Sine version of Natsumi Browser.",
+    "homepage": "https://github.com/CosmoCreeper/Sineify/tree/main/Natsumi%20Browser",
+    "style":"https://raw.githubusercontent.com/CosmoCreeper/Sineify/main/Natsumi%20Browser/chrome.css",
+    "author": "CosmoCreeper",
+    "version": "1.0.0",
+    "tags": [
+        "sine",
+        "natsumi",
+        "browser"
+    ],
+    "createdAt": "2025-05-09",
+    "updatedAt": "2025-05-09"
+}
