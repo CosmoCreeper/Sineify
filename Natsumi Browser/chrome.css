@@ -1,1 +1,4982 @@
+@-moz-document url-prefix("chrome:") {
+  * {
+  /* Accent color */
+  --natsumi-accent-color: var(--zen-primary-color);
+  --natsumi-pages-accent-color: #a0d490;
 
+  /* Natsumi Glass Effect */
+  --glass-blur-radius: 20px;
+  --glass-shadow-size: 10px;
+  --glass-shadow-opacity: 75%;
+
+  /* Natsumi URLbar appear animations */
+  --urlbar-appear-animation-duration: 0.25s;
+  --urlbar-results-animation-duration: 0.5s;
+  --urlbar-individual-result-animation-duration: 0.75s;
+  --urlbar-individual-result-animation-delay: 0.05s;
+  --urlbar-individual-result-animation-delay-offset: 0.05s;
+  --urlbar-individual-result-expand-size: 1.05;
+
+  /* Natsumi border reload animations */
+  --reload-border-animation-duration: 0.2s;
+  --reload-border-animation-rotation-duration: 2s;
+  --reload-border-animation-exit-duration: 1s;
+  --reload-border-margin: 4px;
+
+  /* Natsumi URLbar reload animations */
+  --reload-urlbar-animation-duration: 0.2s;
+  --reload-urlbar-animation-fadein-duration: 2s;
+
+  /* Container tabs gradient */
+  --container-tabs-normal-gradient-width: 25%;
+  --container-tabs-expanded-gradient-width: 50%;
+
+  /* Floating Firefox sidebar panels */
+  --ff-sidebar-x-offset: 20px;
+  --ff-sidebar-y-offset: 20px;
+
+  /* Custom fonts experiment (must be an installed font) */
+  --custom-font: 'Nunito';
+
+  /* pdf.js */
+  --pdfjs-topbar-max-width: 750px; /* use calc(100% - 10px) for max width */
+
+  /* FF home */
+  --home-background-url: url('');
+}
+  * {
+  /* Colors */
+  --natsumi-primary-color: var(--natsumi-accent-color, var(--zen-primary-color));
+  --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+  --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
+  --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 2%, white 98%);
+  --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, var(--zen-dark-color-mix-base) 80%);
+    --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, var(--zen-dark-color-mix-base) 70%);
+    --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 1%, var(--zen-dark-color-mix-base) 99%);
+    --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+
+    @media -moz-pref('zen.theme.color-prefs.colorful') {
+      --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+      --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 40%, black 60%);
+      --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 15%, black 85%);
+      --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+    }
+  }
+
+  /* Material: Mistcrylic */
+  --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-primary-color) 40%, rgba(255, 255, 255, 0.8));
+  --natsumi-mat-mc-shadow-color: rgba(0, 0, 0, 0.3);
+  --natsumi-mat-mc-border-color: rgba(255, 255, 255, 0.1);
+  --natsumi-mat-mc-shadow-size: 10px;
+  --natsumi-mat-mc-blur-radius: 15px;
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-colors-secondary) 50%, rgba(0, 0, 0, 0.8));
+  }
+
+  /* Material: Haze */
+  --natsumi-mat-hz-background: rgba(255, 255, 255, 0.8);
+  --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-primary-color) 20%, rgba(255, 255, 255, 0.8));
+  --natsumi-mat-hz-blur-radius: 100px;
+  --natsumi-mat-hz-shadow-color: rgba(0, 0, 0, 0.3);
+  --natsumi-mat-hz-shadow-size: 10px;
+  --natsumi-mat-hz-saturation: 3;
+  --natsumi-mat-hz-contrast: 2;
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-hz-background: rgba(0, 0, 0, 0.8);
+    --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-colors-secondary) 20%, rgba(0, 0, 0, 0.8));
+  }
+
+  /* Material: Glass */
+  --natsumi-mat-ga-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
+  --natsumi-mat-ga-blur-radius: 10px;
+  --natsumi-mat-ga-shadow-size: 10px;
+  --natsumi-mat-ga-shadow-opacity: 75%;
+  --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), black);
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), white);
+
+    @media -moz-pref("natsumi.theme.force-glass-dark-shadows") {
+      --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), black);
+    }
+  }
+
+  /* Fonts */
+  --natsumi-custom-font: var(--custom-font, system-ui);
+}
+
+/* URL bar appear animation */
+#urlbar {
+  --animation-duration: var(--urlbar-appear-animation-duration, 0.25s);
+}
+
+/* Results appear animation */
+#urlbar-results {
+  --animation-duration: var(--urlbar-results-animation-duration, 0.5s);
+}
+
+/* Individual result appear animation */
+.urlbarView-row {
+  --animation-duration: var(--urlbar-individual-result-animation-duration, 1.0s);
+  --animation-duration-subtle: 0.5s; /* WIP, this won't change anything for now */
+  --animation-delay: var(--urlbar-individual-result-animation-delay, 0.1s);
+  --animation-delay-offset: var(--urlbar-individual-result-animation-delay-offset, 0.3s);
+  --expand-width: var(--urlbar-individual-result-expand-size, 1.1);
+}
+
+/* Reload border animation */
+browser, .browserSidebarContainer.deck-selected {
+  --animation-duration: var(--reload-border-animation-duration, 0.2s);
+  --animation-rotation-duration: var(--reload-border-animation-rotation-duration, 2.0s);
+  --animation-exit-duration: var(--reload-border-animation-exit-duration, 1.0s);
+  --browser-margin: var(--reload-border-margin, 4px);
+}
+
+/* Reload URLbar animation */
+#urlbar-background {
+  --fadein-duration: var(--reload-urlbar-animation-duration, 0.5s);
+  --animation-duration: var(--reload-urlbar-animation-fadein-duration, 1s);
+}
+
+/* Container tabs gradient */
+.tabbrowser-tab {
+  --container-gradient-width: var(--container-tabs-normal-gradient-width, 25%);
+  --container-gradient-width-expanded: var(--container-tabs-expanded-gradient-width, 50%);
+}
+
+/* Sidebar position */
+#sidebar-box {
+  --natsumi-sidebar-x-offset: var(--ff-sidebar-x-offset, 20px);
+  --natsumi-sidebar-y-offset: var(--ff-sidebar-y-offset, 20px);
+}
+
+/* Blade offset for tabs (change this if other rices/mods break Blade) */
+.tabbrowser-tab {
+  --natsumi-tabs-blade-size-offset: 4px;
+  --natsumi-tabs-blade-position-offset: 2px;
+}
+  :root {
+  @media (-moz-platform: macos) {
+    /* Patches collapsed view on macOS */
+    /*noinspection ALL*/
+    @media not -moz-pref("zen.view.sidebar-expanded") {
+    #zen-sidebar-top-buttons-customization-target {
+      padding-top: 0 !important;
+    }
+
+    .titlebar-buttonbox-container {
+      padding: 0 calc(var(--zen-toolbox-padding) / 2) !important;
+      padding-right: var(--zen-toolbox-padding) !important;
+    }
+
+    &:is([inFullscreen]) {
+      #navigator-toolbox {
+        margin-top: 0 !important;
+      }
+    }
+  }
+  }
+
+  &[inDOMFullscreen="true"] {
+    #zen-sidebar-top-buttons-customization-target {
+      padding-top: 3px !important;
+    }
+  }
+
+  /* Consistent navbar position */
+  &[zen-compact-mode="true"] {
+    #nav-bar {
+      margin-left: var(--zen-element-separation);
+    }
+  }
+
+  @media -moz-pref("natsumi.theme.force-blur") {
+    .deck-selected browser, .browserSidebarContainer[zen-split] browser {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+}
+
+/* Multiple toolbars patch */
+
+@media (not -moz-pref("zen.view.use-single-toolbar")) {
+#identity-box {
+  margin-inline-end: 5px !important;
+}
+}
+
+/* Patch and restore List all tabs button */
+
+#alltabs-button {
+  display: flex !important;
+}
+
+/* Remove toolbar button badge if not needed */
+
+toolbarbutton[badged="true"]:not([badge]) {
+  & .toolbarbutton-badge {
+    display: none !important;
+  }
+}
+
+#TabsToolbar-customization-target toolbarbutton[badged="true"]:not([badge]) {
+  & .toolbarbutton-badge-stack {
+    background-color: transparent !important;
+  }
+}
+
+/* Icons patch */
+
+#TabsToolbar-customization-target .toolbarbutton-icon {
+  border-radius: 0 !important;
+}
+
+/* Toolbar patches */
+
+@media -moz-pref("zen.view.sidebar-expanded") {
+  #zen-sidebar-top-buttons-customization-target {
+    toolbarbutton {
+      margin: 1px !important;
+    }
+  }
+}
+
+#PersonalToolbar {
+  padding-left: 0 !important;
+}
+
+#downloads-button image {
+  @media (prefers-color-scheme: light) {
+    --toolbarbutton-icon-fill-attention: color-mix(in srgb, var(--zen-primary-color) 75%, black) !important;
+  }
+}
+
+/* Consistent toolbar button sizing for 1.7.5b */
+
+@media -moz-pref("natsumi.theme.consistent-toolbar-button-size") {
+  #nav-bar-customization-target {
+    toolbaritem {
+      margin: 0 !important;
+
+      toolbarbutton {
+        padding: 0 4px !important;
+      }
+    }
+
+    #PanelUI-menu-button {
+      padding-left: 4px !important;
+    }
+  }
+}
+
+.toolbarbutton-badge-stack {
+  padding: 5px !important;
+
+  #fxa-avatar-image {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+.tab-icon-image {
+  border-radius: 0 !important;
+
+  @media (-moz-platform: macos) {
+    image-rendering: initial !important;
+  }
+
+  &:not([src]), &:-moz-broken {
+    border-radius: 4px !important;
+  }
+}
+
+/* Better transparency for Linux */
+
+@media -moz-pref("zen.widget.linux.transparency") and (-moz-platform: linux) {
+#zen-main-app-wrapper {
+  --zen-themed-toolbar-bg-transparent: color-mix(
+          in srgb,
+          light-dark(var(--zen-branding-bg), #171717) 60%,
+          transparent
+  ) !important;
+}
+}
+
+/* ==== WIP features (do not touch yet) ==== */
+
+/*
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  
+  50% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.tab-label-container {
+  overflow: unset !important;
+  overflow-wrap: break-word !important;
+}
+
+.tabbrowser-tab:hover {
+  .tab-label-container[textoverflow="true"] .tab-text {
+    display: flex !important;
+    white-space: nowrap;
+    animation-delay: -5s !important;
+    animation: scroll-left 10s linear infinite;
+  }
+}
+*/
+  @media -moz-pref("natsumi.theme.compact-marginless") {
+  #zen-tabbox-wrapper {
+    transition: margin 0.2s ease, border-radius 0.2s ease !important;
+  }
+
+  :root:not([customizing]) {
+    .customization-target, #PanelUI-button {
+      toolbarbutton {
+        /*noinspection CssInvalidFunction*/
+        .toolbarbutton-icon, .toolbarbutton-badge-stack {
+          transition: background-color 0.2s ease !important;
+
+          @media -moz-pref("natsumi.theme.opaque-icons") {
+            -moz-context-properties: fill;
+            fill: light-dark(black, white);
+          }
+        }
+      }
+    }
+
+    &[zen-compact-mode="true"] {
+      #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
+        margin: 0 !important;
+
+        #zen-tabbox-wrapper {
+          margin: 0 !important;
+
+          .browserSidebarContainer, browser {
+            margin: 0 !important;
+            border-radius: 0 !important;
+          }
+        }
+
+        @media -moz-pref("zen.view.use-single-toolbar") {
+          @media -moz-pref("natsumi.theme.compact-marginless-hide-bookmarks") {
+            #zen-appcontent-navbar-container:not([zen-has-hover]) {
+              min-height: 0 !important;
+              height: 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Workspaces button */
+
+/*noinspection CssInvalidFunction*/
+#zen-workspaces-button {
+  overflow: visible !important;
+
+  .subviewbutton {
+    border-radius: 6px !important;
+    transition: background-color 0.2s ease !important;
+    font-size: 14px !important;
+    filter: grayscale(0%) !important;
+    --toolbarbutton-hover-background: color-mix(in srgb, var(--zen-branding-bg-reverse) 10%, transparent 90%) !important;
+
+    &:hover {
+      background-color: var(--toolbarbutton-hover-background) !important;
+    }
+
+    &:active {
+      background-color: var(--toolbarbutton-active-background) !important;
+    }
+
+    /*noinspection CssInvalidFunction*/
+    &[active] {
+      border: 2px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4)) !important;
+      background-color: var(--natsumi-mat-hz-background) !important;
+      backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+}
+
+#TabsToolbar-customization-target {
+  toolbarbutton {
+    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+
+    &[checked], &:active {
+      background-color: var(--toolbarbutton-active-background) !important;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+}
+
+/* Compact alerts */
+
+/*noinspection CssInvalidFunction*/
+#fullscreen-warning, #pointerlock-warning {
+  border-radius: 50px !important;
+  padding: 8px 10px !important;
+  background-color: var(--natsumi-mat-hz-background) !important;
+  border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+  box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+  transition: opacity 0.2s ease, top 0.2s ease !important;
+  backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+  opacity: 0;
+  margin: 0 !important;
+  left: 50% !important;
+  translate: -50% 0 !important;
+
+  &:not([hidden]) {
+    display: flex !important;
+  }
+
+  &:not([onscreen]), &:is([hidden]) {
+    top: 20px !important;
+    opacity: 0;
+  }
+
+  /*noinspection CssInvalidFunction*/
+  .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
+    color: light-dark(black, white);
+    font-size: 14px !important;
+    margin-left: 10px !important;
+    margin-right: 0 !important;
+    padding-right: 5px !important;
+  }
+
+  &[onscreen] {
+    top: 30px !important;
+    opacity: 1;
+  }
+}
+
+/* Fullscreen alert */
+
+#fullscreen-warning {
+  &::before {
+    display: none !important;
+  }
+
+  #fullscreen-exit-button {
+    order: -1;
+    border: none !important;
+    background: transparent !important;
+    appearance: none !important;
+    border-radius: 6px !important;
+    color: transparent !important;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: background 0.3s ease !important;
+    position: relative !important;
+
+    /*noinspection CssInvalidFunction*/
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      position: absolute !important;
+      background-image: url('chrome://browser/skin/zen-icons/fullscreen.svg') !important;
+      -moz-context-properties: fill;
+      fill: light-dark(black, white) !important;
+      left: 50% !important;
+      top: 50% !important;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform: translate(-50%, -50%) !important;
+    }
+
+    &:hover {
+      background: var(--toolbarbutton-hover-background) !important;
+    }
+
+    &:active {
+      background: var(--toolbarbutton-active-background) !important;
+    }
+
+    &:hover, &:active {
+      &::before {
+        background-image: url('chrome://browser/skin/zen-icons/fullscreen-exit.svg') !important;
+        transform: translate(-50%, -50%) scale(-100%, 100%) !important;
+        left: 50% !important;
+        top: 50% !important;
+      }
+    }
+  }
+
+  /*noinspection CssInvalidFunction*/
+  .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
+    color: light-dark(black, white);
+    font-size: 14px !important;
+    margin-left: 10px !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Pointer lock alert */
+
+#pointerlock-warning {
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    background-size: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('chrome://browser/skin/zen-icons/security.svg') !important;
+  }
+
+  .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
+    margin-left: 2px !important;
+  }
+}
+
+@media not -moz-pref("natsumi.theme.disable-blur") {
+  #browser:has(#fullscreen-warning:not([hidden]), #pointerlock-warning:not([hidden])) .deck-selected browser {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+  @keyframes essentials-select {
+  0% {
+    opacity: 0.2;
+    scale: 1;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+
+  100% {
+    opacity: 0;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    left: -10px;
+    top: -10px;
+    border-radius: 20px;
+  }
+}
+
+@keyframes backdrop-fadein {
+  0% {
+    backdrop-filter: saturate(0.5) contrast(0.5);
+  }
+
+  100% {
+    backdrop-filter: saturate(3) contrast(2);
+  }
+}
+
+@keyframes backdrop-with-blur-fadein {
+  0% {
+    backdrop-filter: saturate(0.5) contrast(0.5) blur(0);
+  }
+
+  100% {
+    backdrop-filter: saturate(3) contrast(2) blur(100px);
+  }
+}
+
+@keyframes essentials-select {
+  0% {
+    opacity: 0.2;
+    scale: 1;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+
+  100% {
+    opacity: 0;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    left: -10px;
+    top: -10px;
+    border-radius: 20px;
+  }
+}
+
+#zen-main-app-wrapper:not(:has(#zen-welcome)) {
+  /* Tab click animations */
+  #tabbrowser-tabs:not([movingtab]) {
+    .tabbrowser-tab {
+      transition: scale 0.2s ease !important;
+    }
+
+    .tabbrowser-tab:active {
+      scale: 0.96 !important;
+    }
+
+    .tabbrowser-tab:has(.tab-close-button:hover) {
+      scale: 1 !important;
+    }
+  }
+
+  /* Pinned and regular tabs */
+  #vertical-pinned-tabs-container, #tabbrowser-arrowscrollbox {
+    /*noinspection CssInvalidFunction*/
+    .tabbrowser-tab:not([zen-glance-tab]) {
+      --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+      --natsumi-tab-idle-width: 0;
+      --natsumi-tab-idle-opacity: 0;
+
+      &[usercontextid] {
+        @media not -moz-pref("zen.workspaces.hide-default-container-indicator") {
+          --natsumi-tab-highlight-color: var(--identity-icon-color);
+          --natsumi-tab-idle-width: 40%;
+          --natsumi-tab-idle-opacity: 1;
+        }
+
+        &:not([zenDefaultUserContextId="true"]) {
+          --natsumi-tab-highlight-color: var(--identity-icon-color);
+          --natsumi-tab-idle-width: 40%;
+          --natsumi-tab-idle-opacity: 1;
+        }
+      }
+
+      &:has(.tab-close-button:hover) {
+        transition: opacity 0.2s ease !important;
+        --natsumi-tab-highlight-color: rgb(255, 100, 100);
+      }
+
+      & > .tab-stack > .tab-background {
+        transition: background-color 0.2s ease, backdrop-filter 0.2s ease !important;
+        overflow: visible !important;
+
+        .tab-context-line {
+          display: none !important;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: var(--natsumi-tab-idle-width);
+          height: calc(100% - var(--natsumi-tabs-blade-size-offset) - calc(var(--tab-block-margin) * 2));
+          opacity: var(--natsumi-tab-idle-opacity);
+          top: var(--natsumi-tabs-blade-position-offset);
+          left: var(--natsumi-tabs-blade-position-offset);
+          border: 2px solid var(--natsumi-tab-highlight-color);
+          background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+          border-radius: calc(var(--border-radius-medium) - 1px);
+          mask-image: linear-gradient(to right, black, transparent 30%);
+          transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+
+          @media not -moz-pref("zen.view.sidebar-expanded") {
+            left: 0;
+            mask-image: linear-gradient(to right, black, transparent 40%);
+          }
+        }
+      }
+
+      &:hover {
+        & > .tab-stack > .tab-background {
+          &::after {
+            width: calc(100% - var(--natsumi-tabs-blade-size-offset) - calc(var(--tab-block-margin) * 2));
+            opacity: 1;
+          }
+        }
+      }
+
+      &[selected], &[visuallyselected] {
+        /*noinspection CssInvalidFunction*/
+        & > .tab-stack > .tab-background {
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+          background-color: var(--natsumi-mat-hz-background) !important;
+          animation: backdrop-fadein 0.2s ease;
+
+          @media -moz-pref("natsumi.sidebar.blur-tab-button") {
+            animation: backdrop-with-blur-fadein 0.2s ease;
+          }
+
+          animation-fill-mode: forwards;
+
+          &::after {
+            width: calc(100% - calc(var(--tab-block-margin) * 2));
+            height: calc(100% - calc(var(--tab-block-margin) * 2));
+            opacity: 1;
+            top: 0;
+            left: 0;
+
+            @media not -moz-pref("zen.view.sidebar-expanded") {
+              width: calc(100% - calc(var(--tab-block-margin) * 2));
+            }
+          }
+        }
+      }
+
+      &[multiselected] {
+        & > .tab-stack > .tab-background {
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
+
+          &::after {
+            width: calc(100% - calc(var(--tab-block-margin) * 2));
+            opacity: 1;
+
+            @media not -moz-pref("zen.view.sidebar-expanded") {
+              width: calc(100% - calc(var(--tab-block-margin) * 2));
+            }
+          }
+        }
+      }
+
+      &:has(.tab-close-button:active) {
+        opacity: 0.5;
+      }
+    }
+
+    /* Split view tabs */
+    tab-group[split-view-group] {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-background {
+          &::after {
+            mask-image: linear-gradient(to right, black, transparent 60%);
+          }
+        }
+      }
+    }
+  }
+
+  /* Essentials tabs */
+  #tabbrowser-tabs:not([movingtab]) {
+    #zen-essentials-wrapper {
+      .tabbrowser-tab {
+        &:active {
+          scale: 0.9 !important;
+        }
+      }
+    }
+  }
+
+  #zen-essentials-wrapper {
+    .zen-essentials-container {
+      overflow: visible !important;
+    }
+
+    /*noinspection CssInvalidFunction*/
+    .tabbrowser-tab {
+      overflow: visible !important;
+      --natsumi-tab-highlight-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+      --natsumi-tab-line-color: rgba(0, 0, 0, 0);
+
+      &[usercontextid] {
+        @media not -moz-pref("zen.workspaces.hide-default-container-indicator") {
+          --natsumi-tab-highlight-color: var(--identity-icon-color);
+          --natsumi-tab-line-color: var(--identity-icon-color);
+        }
+
+        &:not([zenDefaultUserContextId="true"]) {
+          --natsumi-tab-highlight-color: var(--identity-icon-color);
+          --natsumi-tab-line-color: var(--identity-icon-color);
+        }
+      }
+
+      & > .tab-stack > .tab-background {
+        transition: background-color 0.2s ease !important;
+        border: 2px solid var(--natsumi-tab-highlight-color) !important;
+
+        .tab-context-line {
+          display: none !important;
+        }
+      }
+
+      &:not(:hover) {
+        & > .tab-stack > .tab-background {
+          background-color: transparent !important;
+        }
+      }
+
+      .tab-icon-image {
+        transition: filter 0.2s ease !important;
+      }
+
+      &:hover {
+        .tab-icon-image {
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        & > .tab-stack > .tab-background {
+          background-color: var(--tab-hover-background-color) !important;
+        }
+      }
+
+      &[selected], &[visuallyselected] {
+        .tab-icon-stack::after {
+          content: "";
+          position: absolute;
+          width: 150%;
+          height: 2px;
+          border-radius: 1px;
+          background: var(--natsumi-tab-line-color);
+          left: -25%;
+          bottom: -8px;
+        }
+
+        .tab-icon-image {
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        & > .tab-stack > .tab-background {
+          border: none !important;
+
+          @media -moz-pref("zen.theme.essentials-favicon-bg") {
+            &::before {
+              opacity: 0.6 !important;
+            }
+
+            &::after {
+              filter: saturate(150%) blur(15px) !important;
+            }
+          }
+
+          @media not -moz-pref("zen.theme.essentials-favicon-bg") {
+            background-color: var(--natsumi-mat-hz-background) !important;
+            animation: backdrop-fadein 0.2s ease;
+            animation-fill-mode: forwards;
+          }
+        }
+      }
+
+      &[selected]:not(:active) {
+        .tab-stack {
+          /*noinspection CssInvalidFunction*/
+          &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+            border-radius: 10px;
+            animation: essentials-select 0.25s ease-out;
+            animation-fill-mode: forwards;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
+}
+  @media not -moz-pref("zen.tabs.vertical") {
+  #zen-essentials-container, #vertical-pinned-tabs-container, #tabbrowser-arrowscrollbox {
+    min-height: 36px;
+  }
+  
+  .tabbrowser-tab[selected] {
+    flex: 2 1 150px !important;
+  }
+  #tabbrowser-arrowscrollbox .tabbrowser-tab[selected] {
+    flex: 2 0 150px !important;
+    transition: scale 0.1s ease-in-out, flex 0.2s ease !important;
+  }
+  #urlbar-container {
+    margin-top: 5px;
+  }
+  #zen-essentials-container .tabbrowser-tab {
+    --tab-min-height: 10px !important;
+  }
+  
+  #vertical-pinned-tabs-container .tab-icon-image {
+    margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
+  }
+
+  #nav-bar {
+    min-width: 300px !important;
+  }
+  
+  #tabbrowser-tabs {
+    display: flex !important;
+  }
+
+  #TabsToolbar-customization-target {
+    toolbarbutton {
+      width: auto !important;
+    }
+  }
+}
+  @keyframes urlbar-appear {
+  0% {
+    margin-top: -25vh;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+
+@keyframes urlbar-appear-sideways {
+  0% {
+    margin-left: calc(-50% + calc(min(90%, 60rem) / 2));
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+
+/*noinspection CssInvalidFunction*/
+@keyframes individual-result-appear {
+  0%   {
+    opacity: 0;
+    scale: 0.5;
+    background: var(--natsumi-colors-tertiary);
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    scale: var(--expand-width);
+    background: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    background: transparent;
+  }
+}
+
+/*noinspection CssInvalidFunction*/
+@keyframes individual-result-appear-subtle {
+  0%   {
+    opacity: 1;
+    scale: 1;
+    background: transparent;
+  }
+  60% {
+    scale: 1.05;
+    background: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    background: transparent;
+  }
+}
+
+@keyframes pinned-icon-appear {
+  0% {
+    opacity: 0;
+    scale: 0.5
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    scale: 1.1;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* URLbar styling */
+
+/*noinspection CssInvalidFunction*/
+@media not -moz-pref("natsumi.urlbar.disabled") {
+  :root[zen-compact-mode="true"] {
+    #urlbar {
+      transition: transform 0s linear !important;
+    }
+
+    #urlbar[breakout-extend][zen-floating-urlbar="true"] {
+      transform: translateX(-50%) !important;
+    }
+  }
+
+  * {
+    --urlbarView-item-block-padding: 4px !important;
+    --urlbarView-item-inline-padding: 4px !important;
+  }
+
+  #urlbar #urlbar-background {
+    backdrop-filter: none;
+    background: color-mix(in srgb, var(--zen-branding-bg) 75%, transparent);
+    transition: backdrop-filter 0s ease, background 0s ease;
+
+    @media -moz-pref("natsumi.urlbar.disable-transparency") {
+      background: var(--zen-branding-bg);
+      transition: none;
+    }
+  }
+
+  #urlbar {
+    .urlbarView {
+      overflow: initial !important;
+
+      .urlbarView-title-separator::before {
+        color: rgba(20, 20, 20, 0.2) !important;
+        opacity: 1 !important;
+
+        @media (prefers-color-scheme: dark) {
+          color: rgba(235, 235, 235, 0.2) !important;
+        }
+      }
+
+      .urlbarView-row[has-action][type="clipboard"] {
+        .urlbarView-title-separator::before {
+          opacity: 0 !important;
+        }
+      }
+
+      &:not([action-override]) {
+        .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"]) {
+          .urlbarView-action {
+            margin-left: 8px !important;
+          }
+
+          .urlbarView-title-separator::before {
+            opacity: 0 !important;
+          }
+        }
+      }
+    }
+
+    &[breakout-extend] {
+      @media not -moz-pref("natsumi.urlbar.light") {
+        /* URLbar animations, toggleable to make things lighter. */
+
+        animation-name: urlbar-appear;
+        animation-duration: var(--animation-duration);
+
+        @media -moz-pref("zen.view.use-single-toolbar") {
+          animation-name: urlbar-appear-sideways;
+        }
+
+        #urlbar-results {
+          .urlbarView-row {
+            animation-name: individual-result-appear;
+            animation-duration: var(--animation-duration);
+            animation-fill-mode: forwards;
+            opacity: 0;
+
+            .urlbarView-type-icon {
+              animation-name: pinned-icon-appear;
+              animation-duration: 0.5s;
+              animation-fill-mode: forwards;
+              opacity: 0;
+            }
+          }
+
+          .urlbarView-row:nth-child(1) {
+            animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(2) {
+            animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(3) {
+            animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(4) {
+            animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(5) {
+            animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(6) {
+            animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(7) {
+            animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(8) {
+            animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(9) {
+            animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(10) {
+            animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+
+          .urlbarView-row:nth-child(n+11) {
+            animation-delay: calc((var(--animation-delay) * 10) + var(--animation-delay-offset));
+
+            .urlbarView-type-icon {
+              animation-delay: calc((var(--animation-delay) * 10) + var(--animation-delay-offset) + var(--animation-duration));
+            }
+          }
+        }
+      }
+
+      &[zen-newtab] {
+        #identity-icon {
+          list-style-image: url("chrome://browser/skin/zen-icons/plus.svg") !important;
+        }
+      }
+
+      #urlbar-input {
+        font-size: 20px !important;
+        margin-left: 1.5px !important;
+        margin-right: 0 !important;
+        border-radius: 0 !important;
+
+        @media -moz-pref("zen.view.use-single-toolbar") {
+          margin-left: 4px !important;
+        }
+
+        /*noinspection CssInvalidFunction*/
+        &::-moz-selection {
+          background: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 60%, white)) !important;
+        }
+      }
+
+      #identity-permission-box, #tracking-protection-icon-container, #page-action-buttons {
+        display: none !important;
+      }
+
+      #identity-icon-box {
+        margin-left: 1.5px !important;
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+        border-radius: var(--urlbar-icon-border-radius) !important;
+
+        @media -moz-pref("zen.view.use-single-toolbar") {
+          margin-left: 3px !important;
+        }
+      }
+
+      .verifiedDomain {
+        image {
+          list-style-image: url('chrome://browser/skin/zen-icons/link.svg') !important;
+        }
+      }
+
+      &:not([zen-newtab]) {
+        #identity-box {
+          &:is([pageproxystate="invalid"]).verifiedDomain {
+            image {
+              list-style-image: url('chrome://global/skin/icons/search-glass.svg') !important;
+            }
+          }
+        }
+      }
+
+      /*noinspection CssInvalidFunction*/
+      #urlbar-background {
+        backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius)) !important;
+        transition: backdrop-filter 0.5s ease, background 0.5s ease;
+        border-radius: 15px !important;
+        background: var(--natsumi-mat-mc-background) !important;
+        box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+        border: none !important;
+        outline: unset !important;
+        overflow: hidden;
+
+        &::before {
+          content: "";
+          position: absolute;
+          background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+          opacity: 0.2;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+        }
+
+        /*noinspection CssInvalidFunction*/
+        &::after {
+          content: "";
+          position: absolute;
+          opacity: 1;
+          width: calc(100% - 4px);
+          height: calc(100% - 4px);
+          border: 2px solid light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
+          top: 0;
+          left: 0;
+          border-radius: inherit;
+          mask-image: linear-gradient(135deg, black, transparent 50%);
+        }
+
+        @media -moz-pref("natsumi.urlbar.disable-transparency") {
+          transition: none;
+          backdrop-filter: none;
+          background: var(--natsumi-colors-secondary) !important;
+        }
+      }
+
+      #identity-box {
+        margin-right: 10px !important;
+      }
+
+      .urlbar-input-container {
+        padding-inline: calc(var(--urlbar-margin-inline) + var(--urlbar-container-padding) - 2px) !important;
+      }
+
+      @media -moz-pref("natsumi.urlbar.force-nowrap") {
+        .urlbarView-no-wrap {
+          flex-basis: unset !important;
+        }
+
+        .urlbarView-row-inner {
+          flex-wrap: nowrap !important;
+        }
+
+        .urlbarView-title-separator {
+          display: flex !important;
+        }
+
+        .urlbarView-url {
+          margin-left: 0 !important;
+        }
+      }
+
+      &:not([zen-floating-urlbar="true"]) {
+        animation: none !important;
+
+        #identity-icon-box {
+          margin-left: 10px !important;
+        }
+
+        @media -moz-pref("zen.view.use-single-toolbar") {
+          #identity-icon-box {
+            margin-left: 12px !important;
+          }
+
+          #urlbar-input {
+            margin-left: 4px !important;
+          }
+        }
+      }
+
+      /* Force icon size */
+      #identity-icon {
+        width: 16px !important;
+        height: 16px !important;
+      }
+    }
+
+    &:is([pageproxystate='invalid']):is([usertyping]) {
+      .urlbarView-row, .urlbarView-row .urlbarView-type-icon {
+        animation: none !important;
+        opacity: 1 !important;
+      }
+
+      /*
+      this is still in the oven
+
+      .urlbarView-row {
+        animation-name: individual-result-appear-subtle !important;
+        animation-duration: var(--animation-duration-subtle) !important;
+        animation-delay: 0s !important;
+      }
+      */
+    }
+
+    /* URLbar hover animation */
+
+    &:not([breakout-extend="true"]) {
+      #urlbar-background {
+        transition: background 0.2s ease;
+      }
+
+      &:hover #urlbar-background {
+        background: color-mix(in srgb, var(--natsumi-primary-color) 40%, transparent) !important;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+
+  .urlbarView-row {
+    transition: transform 0.2s ease;
+
+    .urlbarView-row-inner {
+      border-radius: 8px !important;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .urlbarView-title, .urlbarView-url {
+      font-weight: 500 !important;
+      margin-top: auto !important;
+      margin-bottom: auto !important;
+    }
+
+    .urlbarView-title-separator {
+      margin-top: auto !important;
+      margin-bottom: auto !important;
+    }
+
+    .urlbarView-button-menu {
+      display: inline-block !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      opacity: 0;
+      transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease, margin 0.2s ease, background-color 0.2s ease !important;
+    }
+
+    .urlbarView-favicon {
+      transition: background-color 0.2s ease !important;
+    }
+
+    &:active {
+      transform: scale(0.95, 0.95);
+    }
+
+    &[selected] {
+      background: transparent !important;
+    }
+
+    &:hover {
+      background: transparent !important;
+
+      .urlbarView-row-inner {
+        transform: scale(1.01, 1.01) !important;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+        background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
+      }
+
+      .urlbarView-button-menu {
+        max-width: 24px !important;
+        max-height: 24px !important;
+        width: 24px !important;
+        height: 24px !important;
+        opacity: 1;
+        margin-left: 2px !important;
+        margin-right: 2px !important;
+      }
+    }
+
+    &:has(.urlbarView-button-menu:hover) {
+      transform: scale(1, 1) !important;
+
+      .urlbarView-row-inner {
+        transform: scale(1, 1) !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+      }
+
+      .urlbarView-favicon {
+        background-color: transparent !important;
+      }
+    }
+
+    &:not(:has(.urlbarView-button-menu:hover)) {
+      .urlbarView-row:hover .urlbarView-row-inner, .urlbarView-row-inner[selected] {
+        .urlbarView-no-wrap .urlbarView-favicon {
+          background-color: color-mix(in srgb, light-dark(rgba(0, 0, 0, 0.3), var(--natsumi-colors-primary-foreground)) 50%, transparent) !important;
+        }
+
+        .urlbarView-url {
+          color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
+        }
+      }
+    }
+
+    .urlbarView-row-inner[selected] {
+      transform: scale(1.01, 1.01) !important;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+      background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
+    }
+  }
+
+  .urlbarView-row-inner .urlbarView-url {
+    color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
+  }
+
+  .urlbarView-action, .urlbarView-button:not(.urlbarView-button-menu),
+  .searchbar-engine-one-off-item {
+    --urlbar-box-focus-bgcolor: color-mix(in srgb, currentColor 16%, transparent);
+    transition: background-color 0.2s ease !important;
+  }
+
+  /* Results URL display */
+
+  .urlbarView-url {
+    --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
+    color: var(--natsumi-colors-primary-foreground) !important;
+  }
+
+  /* Wrapped indents fix */
+
+  .urlbarView-action {
+    --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
+  }
+
+  /* Border tweaks */
+
+  /*noinspection CssInvalidFunction*/
+  .urlbarView-body-inner {
+    &:has(.urlbarView-row) {
+      border-top: 2px solid transparent !important;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 90%;
+        height: 2px;
+        background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+        mask-image: linear-gradient(to right, black, transparent);
+        top: 0;
+        left: 0;
+        border-radius: 1px;
+      }
+    }
+  }
+
+  /* Compact URLbar */
+
+  @media not -moz-pref("natsumi.urlbar.no-compact") {
+    @media not -moz-pref("zen.view.use-single-toolbar") {
+      @media -moz-pref("zen.tabs.vertical") {
+
+        #urlbar:not([breakout-extend="true"]) {
+          --urlbar-anim-time: 0.2s;
+
+          #urlbar-background {
+            opacity: 1 !important;
+            transition: opacity var(--urlbar-anim-time) ease, background-color 0.2s ease 0s, box-shadow 0.2s ease 0s;
+          }
+
+          .urlbar-input-container {
+            max-width: 100% !important;
+            left: 0 !important;
+            transition: max-width var(--urlbar-anim-time) ease, left var(--urlbar-anim-time) ease;
+          }
+
+          .urlbar-input-box {
+            text-align: center !important;
+          }
+
+          #identity-icon-box {
+            transition: padding var(--urlbar-anim-time) ease, background var(--urlbar-anim-time) ease;
+          }
+
+          #tracking-protection-icon-container, .urlbar-page-action {
+            transition: width var(--urlbar-anim-time) ease, opacity var(--urlbar-anim-time) ease, margin var(--urlbar-anim-time) ease;
+          }
+        }
+
+        #zen-appcontent-navbar-container:not(:hover) {
+          #urlbar:not([breakout-extend="true"]):not(:hover):not([focused]):not(:has(.urlbar-page-action[open], #tracking-protection-icon-container[open], .identity-box-button[open])) {
+            & > *, #tracking-protection-icon-container, .urlbar-page-action, #identity-icon-box {
+              transition-delay: 0.5s !important;
+            }
+
+            #identity-icon-box {
+              padding-left: 6px !important;
+              padding-right: 6px !important;
+              background: none !important;
+            }
+
+            #tracking-protection-icon-container, .urlbar-page-action {
+              width: 0 !important;
+              opacity: 0 !important;
+              margin: 0 !important;
+            }
+
+            #urlbar-background {
+              opacity: 0 !important;
+              transition: opacity var(--urlbar-anim-time) ease, background-color 0.2s ease 0s, box-shadow 0s ease 0s !important;
+            }
+
+            .urlbar-input-container {
+              max-width: 300px !important;
+              left: calc(50% - 150px) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media not -moz-pref("natsumi.theme.disable-blur") {
+    @media not -moz-pref("natsumi.urlbar.disable-transparency") {
+      #browser:has(#urlbar[breakout-extend]) {
+        .deck-selected browser, .browserSidebarContainer[zen-split] browser {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+      }
+    }
+  }
+}
+  @media not -moz-pref("natsumi.theme.disable-loading-animations") {
+  @keyframes browser-loading {
+    from {
+      transform: rotate(0);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes browser-urlbar-loading {
+    from {
+      transform: translateX(calc(var(--urlbar-width) * -2));
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes browser-loading-stop {
+    0% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes browser-margin {
+    0% {
+      margin: 0;
+    }
+
+    70% {
+      margin: calc(var(--browser-margin) + 2px);
+    }
+
+    100% {
+      margin: calc(var(--browser-margin));
+    }
+  }
+
+  @keyframes browser-margin-reverse {
+    0% {
+      margin: var(--browser-margin);
+    }
+
+    70% {
+      margin: 1px;
+    }
+
+    100% {
+      margin: 0;
+    }
+  }
+
+  @media -moz-pref("natsumi.theme.enable-border-animation") {
+    :not(:has(hbox.zen-glance-background)):not(:has(hbox.zen-glance-overlay)) {
+      .browserStack browser {
+        animation-name: browser-margin-reverse;
+        animation-duration: var(--animation-exit-duration);
+        border-radius: var(--zen-border-radius);
+      }
+
+      .browserSidebarContainer.deck-selected {
+        &::before {
+          --size: max(140vw, 140vh);
+          --offset: calc(var(--size) / -4);
+          content: "";
+          position: absolute;
+          background-color: color-mix(in srgb, var(--natsumi-primary-color) 40%, transparent);
+          z-index: 0;
+          width: var(--size);
+          height: var(--size);
+          left: 50%;
+          top: 50%;
+          translate: -50% -50%;
+          animation: browser-loading-stop var(--animation-exit-duration) linear;
+          animation-fill-mode: forwards;
+        }
+      }
+    }
+  }
+
+  @media not -moz-pref("natsumi.theme.disable-urlbar-animation") {
+    #urlbar:not([breakout-extend="true"]) {
+      #urlbar-background {
+        overflow: hidden;
+
+        /*noinspection CssInvalidFunction*/
+
+        &::before {
+          content: "";
+          transition: opacity var(--fadein-duration) ease !important;
+          opacity: 0;
+          width: 300%;
+          height: 100%;
+          position: absolute;
+          background: light-dark(
+                  var(--natsumi-primary-color),
+                  color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
+          ) !important;
+        }
+      }
+    }
+  }
+
+  :has(.tabbrowser-tab[selected][busy]):not(:has(hbox.zen-glance-background)):not(:has(hbox.zen-glance-overlay)) {
+    @media -moz-pref("natsumi.theme.enable-border-animation") {
+      .browserSidebarContainer.deck-selected {
+        box-shadow: none !important;
+
+        &::before {
+          background: linear-gradient(
+                  90deg,
+                  var(--natsumi-primary-color) 0%,
+                  var(--natsumi-colors-secondary) 100%
+          );
+          animation: browser-loading var(--animation-rotation-duration) linear infinite;
+          animation-fill-mode: forwards;
+        }
+
+        .browserStack browser {
+          animation-name: browser-margin;
+          animation-duration: var(--animation-duration);
+          animation-fill-mode: forwards;
+          border-radius: 8px;
+          background-color: #F9F9FB;
+          @media (prefers-color-scheme: dark) {
+            background-color: #2B2A33;
+          }
+        }
+      }
+    }
+
+    @media not -moz-pref("natsumi.theme.disable-urlbar-animation") {
+      #urlbar:not([breakout-extend="true"]) {
+        #urlbar-background {
+          /*noinspection CssInvalidFunction*/
+
+          &::before {
+            animation: browser-urlbar-loading var(--animation-duration) linear infinite;
+            opacity: 1;
+            background: linear-gradient(
+                    90deg,
+                    light-dark(
+                            var(--natsumi-primary-color),
+                            color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
+                    ) 0%,
+                    var(--natsumi-colors-secondary) 33%,
+                    light-dark(
+                            var(--natsumi-primary-color),
+                            color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
+                    ) 66%,
+                    var(--natsumi-colors-secondary) 100%
+            ) !important;
+            transform: translateX(calc(var(--urlbar-width) * -2));
+          }
+        }
+      }
+    }
+  }
+
+  /* Disable animations for non-website elements */
+
+  @media -moz-pref("natsumi.theme.enable-border-animation") {
+    browser.dialogFrame {
+      animation-name: none !important;
+
+      &::before {
+        animation: none !important;
+        opacity: 0 !important;
+        display: none !important;
+        background: transparent !important;
+      }
+    }
+  }
+}
+  @keyframes initial-animation {
+  from {
+    top: 0;
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  to {
+    top: 20px;
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes glass-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
+@media not -moz-pref("natsumi.findbar.disabled") {
+  /*noinspection CssInvalidFunction*/
+  findbar {
+    position: absolute;
+    top: 20px;
+    width: min(550px, 90%);
+    right: 20px;
+    min-height: 70px;
+    height: auto !important;
+    flex-wrap: wrap;
+    border-radius: 15px;
+    background: var(--natsumi-mat-mc-background) !important;
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+    border: none !important;
+    opacity: 1;
+    transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+    animation: initial-animation 0.2s ease;
+    filter: blur(0);
+    box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+    .findbar-container hbox[anonid="findbar-textbox-wrapper"] {
+      border-bottom: 2px solid transparent !important;
+      position: relative;
+
+      /*noinspection CssInvalidFunction*/
+      &::after {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+        mask-image: linear-gradient(to right, black, transparent);
+        bottom: 0;
+        left: 0;
+        border-radius: 1px;
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+      opacity: 0.2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    /*noinspection CssInvalidFunction*/
+    &::after {
+      content: "";
+      position: absolute;
+      opacity: 1;
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      border: 2px solid light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
+      top: 0;
+      left: 0;
+      border-radius: inherit;
+      mask-image: linear-gradient(135deg, black, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Restore old width */
+    @media -moz-pref("natsumi.findbar.wider-findbar") {
+      width: min(720px, 90%);
+    }
+
+    /*noinspection CssInvalidPropertyValue*/
+    &:is([hidden="true"]) {
+      visibility: inherit !important;
+      pointer-events: none !important;
+      opacity: 0 !important;
+      top: 0 !important;
+      animation: glass-disappear 0.2s linear !important;
+      animation-fill-mode: forwards !important;
+      filter: blur(5px);
+    }
+
+    /*noinspection CssInvalidFunction*/
+    &:has(.findbar-textbox:is([status="notfound"])) {
+      @media not -moz-pref("natsumi.findbar.disable-not-found-bg") {
+        background: color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, transparent) !important;
+        box-shadow: 0 0 10px color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, light-dark(black, white)) !important;
+      }
+    }
+
+    /*noinspection CssInvalidPropertyValue*/
+    .findbar-closebutton {
+      outline: none !important;
+      order: 1;
+    }
+
+    .findbar-container {
+      margin-left: 10px !important;
+      margin-bottom: 5px !important;
+      flex-wrap: wrap;
+      height: auto !important;
+      row-gap: 10px;
+
+      /*noinspection CssInvalidFunction*/
+      & > :first-child {
+        width: 100% !important;
+        margin-top: 5px !important;
+        padding-bottom: 10px !important;
+        border-bottom: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+
+        &::before {
+          content: "";
+          width: 16px !important;
+          min-width: 16px !important;
+          background-image: url(chrome://global/skin/icons/search-glass.svg) !important;
+          background-repeat: no-repeat;
+          margin-top: 4px;
+          margin-right: 15px;
+          margin-left: 5px;
+
+          @media (prefers-color-scheme: dark) {
+            filter: invert();
+          }
+        }
+
+        .findbar-textbox {
+          background: none !important;
+          padding: 0 !important;
+          font-size: 16px !important;
+          box-shadow: none !important;
+          width: 100% !important;
+          border: none !important;
+
+          /*noinspection CssInvalidFunction*/
+
+          &::-moz-selection {
+            background: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 60%, white)) !important;
+          }
+        }
+
+        toolbarbutton {
+          width: 24px !important;
+          justify-content: space-between !important;
+          padding: 4px !important;
+          margin-left: 4px !important;
+          margin-right: 0 !important;
+        }
+      }
+
+      checkbox, label, description {
+        margin-left: 4px !important;
+        margin-right: 6px !important;
+      }
+
+      .findbar-label {
+        display: flex;
+        flex-basis: 100% !important;
+
+        &:is([hidden="true"]) {
+          display: none;
+        }
+      }
+
+      .found-matches {
+        font-size: 14px !important;
+        margin-top: 10px !important;
+
+        &:not([hidden]) {
+          &::before {
+            background-image: url('chrome://browser/skin/zen-icons/search-page.svg') !important;
+            background-repeat: no-repeat !important;
+            padding-left: 25px !important;
+          }
+        }
+      }
+
+      .findbar-find-status {
+        display: none;
+        margin-left: 29px !important;
+
+        &:is([status="notfound"]) {
+          margin-left: 4px !important;
+          margin-top: 10px !important;
+          font-size: 14px !important;
+          font-weight: normal !important;
+          flex-basis: 100% !important;
+          display: flex;
+          align-items: center;
+          background-repeat: no-repeat !important;
+
+          &::before {
+            content: "";
+            min-width: 17px !important;
+            min-height: 17px !important;
+            background-image: url(chrome://global/skin/icons/close.svg) !important;
+            margin-right: 8px !important;
+            background-repeat: no-repeat !important;
+
+            @media (prefers-color-scheme: dark) {
+              filter: invert();
+            }
+          }
+        }
+
+        &:is([data-l10n-id]) {
+          display: flex;
+        }
+      }
+
+      .checkbox-label {
+        font-size: 12px !important;
+      }
+    }
+  }
+
+  @media not -moz-pref("natsumi.theme.disable-blur") {
+    .deck-selected, .browserSidebarContainer[zen-split] {
+      &:has(findbar:not([hidden="true"])) browser {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+  }
+}
+  @media not -moz-pref("natsumi.library.disabled") {
+  /*noinspection CssInvalidFunction*/
+  @-moz-document url-prefix(chrome://browser/content/places/places.xhtml) {
+    * {
+      --natsumi-primary-color: #a0d490;
+      --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+      --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
+      --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-primary) 75%, black);
+
+      @media (prefers-color-scheme: dark) {
+        --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, #1d1d1d 80%);
+        --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, #1d1d1d 70%);
+        --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, white);
+
+        @media -moz-pref("natsumi.theme.force-dark-shadows") {
+          --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, black);
+        }
+      }
+
+      --toolbarbutton-hover-background: color-mix(in srgb, light-dark(#1d1d1d, #ebebeb) 10%, transparent 90%);
+      --toolbarbutton-active-background: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.11));
+    }
+
+    /* Credit to nova17_ on Discord for logo */
+    window::before {
+      content: "";
+      position: absolute;
+      height: 80vh;
+      width: auto;
+      aspect-ratio: 1/1 !important;
+      transform: translate(-50%, -50%);
+      top: 100%;
+      left: 100%;
+      background-color: light-dark(black, white);
+      mask-image: url('data:image/svg+xml,<%3Fxml version="1.0" encoding="utf-8"%3F><!-- Generator: Adobe Illustrator 28.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:%23FFFFFF;}</style><path class="st0" d="M16,22.2c3.4,0,6.2-2.8,6.2-6.2c0-3.4-2.8-6.2-6.2-6.2c-3.4,0-6.2,2.8-6.2,6.2C9.8,19.4,12.6,22.2,16,22.2z M20.9,16c0,2.7-2.2,4.9-4.9,4.9s-4.9-2.2-4.9-4.9s2.2-4.9,4.9-4.9S20.9,13.3,20.9,16z"/><path class="st0" d="M26.7,16c0,5.9-4.8,10.7-10.7,10.7S5.3,21.9,5.3,16S10.1,5.3,16,5.3S26.7,10.1,26.7,16z M16,24.6c4.8,0,8.6-3.9,8.6-8.6S20.8,7.4,16,7.4S7.4,11.2,7.4,16S11.2,24.6,16,24.6z"/><path class="st0" d="M32,16c0,8.8-7.2,16-16,16S0,24.8,0,16S7.2,0,16,0S32,7.2,32,16z M16,29.1c7.3,0,13.1-5.9,13.1-13.1S23.3,2.9,16,2.9S2.9,8.7,2.9,16S8.7,29.1,16,29.1z"/></svg>');
+      mask-repeat: no-repeat;
+      mask-position: center;
+      opacity: 5% !important;
+      pointer-events: none !important;
+      z-index: -999 !important;
+    }
+
+    @media (-moz-platform: macos) {
+      #placesView, #downloadsListBox {
+        /*noinspection CssInvalidPropertyValue*/
+        appearance: -moz-window-titlebar !important;
+      }
+    }
+
+    #placesToolbar, #placesView > splitter {
+      border: none !important;
+    }
+
+    #contentView {
+      background-color: rgba(0, 0, 0, 0.2) !important;
+      border-radius: 10px 0 0 0 !important;
+      margin: 5px 0 0 5px !important;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    #placeContent {
+      background-color: transparent !important;
+    }
+
+    #detailsPane {
+      margin-left: 5px;
+    }
+
+    #placesToolbar {
+      min-height: calc(env(-moz-mac-titlebar-height) + 32px) !important;
+
+      toolbarbutton {
+        margin: 0 4px !important;
+        height: 100% !important;
+        border: none !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+        appearance: none !important;
+
+        .toolbarbutton-icon {
+          margin: 0 !important;
+          padding: 6px !important;
+          border-radius: 6px !important;
+          display: flex !important;
+          transition: background-color 0.2s ease !important;
+        }
+
+        .toolbarbutton-text {
+          display: none !important;
+        }
+
+        dropmarker {
+          display: none;
+        }
+
+        &#back-button .toolbarbutton-icon {
+          list-style-image: url("chrome://browser/skin/zen-icons/back.svg") !important;
+        }
+
+        &#forward-button .toolbarbutton-icon {
+          list-style-image: url("chrome://browser/skin/zen-icons/forward.svg") !important;
+        }
+
+        &#organizeButton .toolbarbutton-icon {
+          list-style-image: url("chrome://browser/skin/zen-icons/settings.svg") !important;
+        }
+
+        &#clearDownloadsButton .toolbarbutton-icon {
+          list-style-image: url("chrome://browser/skin/zen-icons/edit-delete.svg") !important;
+        }
+
+        &#viewMenu .toolbarbutton-icon {
+          list-style-image: url("chrome://browser/skin/zen-icons/customize.svg") !important;
+        }
+
+        &#maintenanceButton .toolbarbutton-icon {
+          list-style-image: url("chrome://browser/skin/zen-icons/move-tab.svg") !important;
+        }
+
+        &:not([disabled]) {
+          &:hover {
+            .toolbarbutton-icon {
+              background-color: var(--toolbarbutton-hover-background) !important;
+            }
+          }
+
+          &:active, &[open] {
+            .toolbarbutton-icon {
+              background-color: var(--toolbarbutton-active-background) !important;
+            }
+          }
+        }
+      }
+
+      search-textbox {
+        appearance: none !important;
+        margin: 2px 0 !important;
+        margin-right: 6px !important;
+        height: calc(100% - 4px) !important;
+        padding: 0 6px !important;
+        background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)) !important;
+        border-radius: 6px !important;
+
+        &::before {
+          content: "";
+          width: 16px;
+          height: 16px;
+          background-color: light-dark(black, white);
+          position: relative;
+          top: 50%;
+          translate: 0 -50%;
+          margin-right: 6px;
+          mask-image: url("chrome://browser/skin/zen-icons/search-glass.svg");
+          mask-size: 14px;
+          mask-repeat: no-repeat;
+          mask-position: center;
+        }
+      }
+    }
+
+    .textbox-search-clear {
+      list-style-image: url("chrome://browser/skin/zen-icons/close.svg") !important;
+      -moz-context-properties: fill;
+      fill: light-dark(black, white) !important;
+      margin: 0 !important;
+      position: relative !important;
+    }
+
+    #placesList, #downloadsListBox {
+      background-color: transparent !important;
+    }
+
+    #downloadsListBox {
+      background-color: transparent !important;
+      padding: 0 5px;
+
+      .download {
+        margin: 5px 0;
+        border-radius: 5px !important;
+        transition: background 0.2s ease, box-shadow 0.2s ease !important;
+        overflow: hidden !important;
+        position: relative;
+
+        .downloadTypeIcon {
+          z-index: 999 !important;
+        }
+
+        .downloadContainer {
+          position: static;
+
+          .downloadTarget {
+            font-size: 14px;
+            z-index: 999 !important;
+          }
+
+          .downloadDetails::before {
+            color: light-dark(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.8)) !important;
+          }
+
+          .downloadProgress {
+            appearance: none !important;
+            border-radius: 0 !important;
+            position: absolute;
+            width: 100%;
+            height: 100% !important;
+            margin: 0 !important;
+            left: 0 !important;
+            background: transparent !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
+
+            &::-moz-progress-bar {
+              border-radius: 0 !important;
+              background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 75%, black), var(--natsumi-primary-color)) !important;
+              mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.4) calc(100% - 100px), rgba(0, 0, 0, 1) 100%)
+            }
+
+            &[paused] {
+              &::-moz-progress-bar {
+                filter: grayscale(1) !important;
+              }
+            }
+          }
+        }
+
+        .downloadButton {
+          .button-box {
+            padding: 2px !important;
+            background-color: transparent !important;
+            pointer-events: all !important;
+
+            .button-icon {
+              padding: 6px !important;
+              fill: light-dark(black, white) !important;
+              box-sizing: content-box;
+              background-color: transparent;
+              border-radius: 6px !important;
+              transition: background-color 0.2s ease !important;
+            }
+
+            &:hover {
+              .button-icon {
+                background-color: var(--toolbarbutton-hover-background);
+              }
+            }
+
+            &:active {
+              .button-icon {
+                background-color: var(--toolbarbutton-active-background);
+              }
+            }
+          }
+
+          &.downloadIconCancel .button-icon {
+            list-style-image: url("chrome://browser/skin/zen-icons/close.svg") !important;
+          }
+
+          &.downloadIconShow .button-icon {
+            list-style-image: url("chrome://browser/skin/zen-icons/search-glass.svg") !important;
+          }
+
+          &.downloadIconRetry .button-icon {
+            list-style-image: url("chrome://browser/skin/zen-icons/reload.svg") !important;
+          }
+        }
+
+        &:hover {
+          background-color: var(--toolbarbutton-hover-background) !important;
+        }
+
+        &[selected] {
+          background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-secondary)) !important;
+          box-shadow: 0 0 5px var(--natsumi-mat-ga-shadow-color) !important;
+
+          @media (prefers-color-scheme: light) {
+            .downloadTarget {
+              color: black;
+            }
+          }
+        }
+
+        &:is([state="0"], [state="4"]) {
+          /*background-color: transparent !important;*/
+        }
+
+        &:not([exists]):is([state="1"], [state="2"], [state="3"]) {
+          .downloadTarget {
+            color: light-dark(#555, #aaa);
+            text-decoration: line-through;
+          }
+
+          .downloadTypeIcon {
+            filter: grayscale(1) brightness(0.75) !important;
+          }
+        }
+      }
+    }
+
+    #editBookmarkPanelContent {
+      .zenEditBMPanel_fieldContainer {
+        grid-column: 1 / -1 !important;
+
+        &:has(#editBMPanel_workspaceDropdown) {
+          display: none !important;
+        }
+
+        /*noinspection CssInvalidPropertyValue*/
+        #editBMPanel_namePicker {
+          width: -moz-available !important;
+        }
+      }
+
+      input {
+        border: none !important;
+        outline: unset !important;
+        background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)) !important;
+      }
+
+      .panel-button {
+        appearance: none !important;
+        aspect-ratio : 1 / 1 !important;
+
+        .button-box {
+          text-align: center !important;
+          border-radius: 6px !important;
+          transition: background-color 0.2s ease !important;
+
+          .button-icon {
+            list-style-image: url("chrome://browser/skin/zen-icons/arrow-down.svg") !important;
+            -moz-context-properties: fill;
+            fill: light-dark(black, white) !important;
+          }
+
+          .button-text {
+            display: none !important;
+          }
+        }
+
+        &:hover {
+          .button-box {
+            background-color: var(--toolbarbutton-hover-background) !important;
+          }
+        }
+
+        &:active {
+          .button-box {
+            background-color: var(--toolbarbutton-active-background) !important;
+          }
+        }
+
+        &.expander-up {
+          .button-icon {
+            list-style-image: url("chrome://browser/skin/zen-icons/arrow-up.svg") !important;
+          }
+        }
+      }
+    }
+  }
+}
+  @keyframes fadein-animation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
+#zen-media-current-time, #zen-media-duration {
+  font-variant-numeric: tabular-nums;
+}
+
+#zen-media-controls-toolbar {
+  /*noinspection CssInvalidFunction*/
+  & > toolbaritem {
+    background-color: var(--natsumi-mat-hz-background) !important;
+    backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
+
+    @media -moz-pref("natsumi.miniplayer.blur-fix") {
+      &::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        backdrop-filter: blur(15px);
+        pointer-events: none;
+      }
+    }
+
+    /*noinspection CssInvalidFunction*/
+    &::after {
+      content: "";
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      background-color: light-dark(var(--zen-colors-primary), var(--zen-primary-color));
+      mask-image: radial-gradient(closest-side, black, transparent);
+      top: -75%;
+      left: -75%;
+      opacity: 0;
+      transition: background-color 0.2s ease;
+      pointer-events: none;
+    }
+
+    @media -moz-pref("natsumi.miniplayer.disable-accent") {
+      &::after {
+        display: none !important;
+      }
+    }
+
+    toolbarbutton {
+      z-index: 0 !important;
+    }
+  }
+
+  &:hover {
+    & > toolbaritem {
+      overflow: hidden;
+
+      &::after {
+        animation: fadein-animation 0.5s ease;
+        animation-fill-mode: forwards;
+      }
+    }
+  }
+
+  &:not(:hover) {
+    #zen-media-service-hbox {
+      padding-top: 0 !important;
+    }
+
+    & > toolbaritem {
+      &::before, &::after {
+        display: none;
+      }
+    }
+  }
+
+  #zen-media-service-hbox {
+    padding-top: 5px !important;
+    transition: padding 0.15s ease-in-out !important;
+  }
+
+  #zen-media-title {
+    font-size: 16px !important;
+  }
+
+  #zen-media-artist {
+    font-size: 10px !important;
+  }
+
+  #zen-media-info-vbox {
+    &::before {
+      display: none !important;
+    }
+  }
+
+  #zen-media-progress-bar {
+    &::-moz-range-thumb {
+      scale: 1;
+      transition: scale 0.2s ease;
+    }
+
+    &::-moz-range-track, &::-moz-range-progress {
+      transition: height 0.2s ease;
+    }
+
+    &:hover {
+      &::-moz-range-thumb {
+        scale: 1.4;
+      }
+
+      &::-moz-range-track, &::-moz-range-progress {
+        height: calc(var(--progress-height) + 2px) !important;
+      }
+    }
+  }
+}
+  @media not -moz-pref("natsumi.pip.disabled") {
+  @-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
+    /*noinspection CssInvalidFunction*/
+    * {
+      --natsumi-primary-color: #a0d490;
+      --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+      --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
+
+      @media (prefers-color-scheme: dark) {
+        --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, #1d1d1d 80%);
+        --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, #1d1d1d 70%);
+      }
+
+      /* Material: Haze */
+      --natsumi-mat-hz-background: rgba(255, 255, 255, 0.8);
+      --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-primary-color) 30%, rgba(255, 255, 255, 0.8));
+      --natsumi-mat-hz-blur-radius: 100px;
+
+      @media (prefers-color-scheme: dark) {
+        --natsumi-mat-hz-background: rgba(0, 0, 0, 0.8);
+        --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-colors-secondary) 40%, rgba(0, 0, 0, 0.8));
+      }
+
+      /* Material: Glass */
+      --natsumi-mat-ga-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
+      --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white));
+      --toolbarbutton-hover-background: color-mix(in srgb, light-dark(#1d1d1d, #ebebeb) 10%, transparent 90%);
+      --toolbarbutton-active-background: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.11));
+
+      @media -moz-pref("natsumi.theme.force-dark-shadows") {
+        --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, black);
+      }
+    }
+
+    @keyframes pip-fadein-html {
+      0% {
+        background-color: transparent;
+        scale: 0.8;
+      }
+
+      99% {
+        background-color: transparent;
+        scale: 1;
+      }
+
+      100% {
+        background-color: black;
+      }
+    }
+
+    @keyframes pip-fadein-player {
+      0% {
+        filter: blur(30px);
+        opacity: 0;
+      }
+
+      70% {
+        filter: blur(5px);
+      }
+
+      100% {
+        filter: blur(0);
+        opacity: 1;
+      }
+    }
+
+    @media -moz-pref("natsumi.pip.rounded") {
+      /* This won't work on Linux (sadly), might be just a Gnome thing. */
+      /* If you're seeing this, create an issue if it does indeed work */
+
+      @media (-moz-platform: windows) {
+        window, html, body {
+          /* Share same radius as macOS for the sake of simplicity later */
+          border-radius: 9px !important;
+        }
+      }
+    }
+
+    html {
+      animation: pip-fadein-html 0.5s ease !important;
+    }
+
+    .player-holder {
+      animation: pip-fadein-player 0.5s ease !important;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    #controls {
+      opacity: 1 !important;
+
+      /*noinspection CssInvalidFunction*/
+      & > button {
+        opacity: 0 !important;
+        top: 0 !important;
+        filter: blur(5px);
+        border-radius: 6px !important;
+        transition: opacity 0.3s ease, top 0.3s ease, filter 0.3s ease, background-color 0.2s ease !important;
+        backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+        background-image: none !important;
+        background-color: var(--natsumi-mat-hz-background) !important;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+        border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
+
+        @media -moz-pref("natsumi.pip.tinted-haze") {
+          background-color: var(--natsumi-mat-hz-background-tinted) !important;
+        }
+
+        &::before {
+          content: "";
+          width: 16px;
+          height: 16px;
+          padding: 2px;
+          display: flex;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          align-content: center;
+          justify-content: center;
+          fill: white !important;
+
+          @media (prefers-color-scheme: light) {
+            fill: black !important;
+          }
+        }
+
+        &#close::before {
+          content: url("chrome://browser/skin/zen-icons/close.svg") !important;
+        }
+
+        &#minimize::before {
+          content: url("chrome://browser/skin/zen-icons/unpin.svg") !important;
+        }
+
+        &#unpip::before {
+          content: url("chrome://browser/skin/zen-icons/screen.svg") !important;
+        }
+
+        &:hover {
+          background-color: color-mix(in srgb, var(--natsumi-mat-ga-background) 80%, white) !important;
+
+          @media (prefers-color-scheme: light) {
+            background-color: color-mix(in srgb, var(--natsumi-mat-ga-background) 80%, black) !important;
+          }
+        }
+      }
+
+      #controls-bottom-gradient {
+        display: none !important;
+      }
+
+      /*noinspection CssInvalidFunction*/
+      #controls-bottom {
+        opacity: 0 !important;
+        bottom: -5px !important;
+        background-color: var(--natsumi-mat-hz-background) !important;
+        border-radius: 10px !important;
+        padding: 10px 15px !important;
+        margin: 0 5px !important;
+        margin-bottom: 5px !important;
+        width: min(calc(100% - 10px), 700px) !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+        backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+        filter: blur(10px);
+        transition: opacity 0.3s ease, bottom 0.3s ease, filter 0.3s ease !important;
+        border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
+        left: calc(50% - 5px) !important;
+        transform: translateX(-50%) !important;
+
+        @media -moz-pref("natsumi.pip.tinted-haze") {
+          background-color: var(--natsumi-mat-hz-background-tinted) !important;
+        }
+
+        @media -moz-pref("natsumi.pip.native-border-radius") and (width <= 710px) {
+          /* For the sake of adding native radius, we'll reduce the margin of the controls here */
+          width: min(100%, 700px) !important;
+          margin: 0 !important;
+          left: calc(50%) !important;
+          bottom: -10px !important;
+
+          /*
+          For now this config is available on macOS only, this'll be added to Windows and Linux
+          once curved PiP for those platforms moves out of experiment status
+          */
+          @media (-moz-platform: macos) {
+            border-radius: 5px !important;
+          }
+        }
+
+        .start-controls {
+          @media (width > 300px) {
+            display: flex !important;
+          }
+
+          /*noinspection CssInvalidFunction*/
+          #timestamp {
+            font-size: 12px !important;
+            color: light-dark(black, white) !important;
+          }
+        }
+
+        .end-controls {
+          display: flex !important;
+        }
+
+        #scrubber, #audio-scrubber {
+          margin: 0 !important;
+
+          /*noinspection CssInvalidFunction*/
+          &::-moz-range-progress {
+            background: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+          }
+
+          /*noinspection CssInvalidFunction*/
+          &::-moz-range-track {
+            background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+          }
+
+          /*noinspection CssInvalidFunction*/
+          &::-moz-range-thumb {
+            background-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+            width: 12px !important;
+            height: 12px !important;
+            border: none !important;
+          }
+        }
+
+        #audio-scrubber {
+          &::-moz-range-thumb {
+            width: 8px !important;
+            height: 8px !important;
+            opacity: 1 !important;
+          }
+        }
+
+        /*noinspection CssInvalidFunction*/
+        button {
+          opacity: 1 !important;
+          position: relative;
+          padding: 6px !important;
+          background-size: 16px !important;
+          width: 28px !important;
+          height: 28px !important;
+          border-radius: 6px !important;
+          transition: background-color 0.2s ease !important;
+          -moz-context-properties: fill;
+          fill: light-dark(black, white) !important;
+
+          &[disabled] {
+            cursor: default !important;
+            fill-opacity: 0.4 !important;
+
+            &::after {
+              display: none !important;
+            }
+          }
+
+          &:not([disabled]) {
+            &:hover {
+              background-color: var(--toolbarbutton-hover-background) !important;
+            }
+
+            &:active {
+              background-color: var(--toolbarbutton-active-background) !important;
+            }
+          }
+
+          &#playpause {
+            background-image: url("chrome://browser/skin/zen-icons/media-play.svg") !important;
+          }
+
+          &#audio {
+            background-image: url("chrome://browser/skin/zen-icons/media-unmute.svg") !important;
+          }
+
+          &#seekBackward {
+            background-image: url("chrome://browser/skin/zen-icons/reload.svg") !important;
+            scale: -1 1;
+
+            &::before {
+              content: "5";
+              font-size: 8px;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(50%, -50%);
+              scale: -1 1;
+            }
+
+            &::after {
+              scale: -1 1;
+            }
+          }
+
+          &#seekForward {
+            background-image: url("chrome://browser/skin/zen-icons/reload.svg") !important;
+
+            &::before {
+              content: "5";
+              font-size: 8px;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+
+          &#fullscreen {
+            background-image: url("chrome://browser/skin/zen-icons/fullscreen.svg") !important;
+          }
+        }
+
+        .controls-bottom-upper {
+          margin: 0 !important;
+          margin-bottom: 5px !important;
+          width: 100% !important;
+          height: fit-content !important;
+
+          .scrubber-no-drag {
+            margin: 0 !important;
+          }
+
+          &:has(#scrubber[hidden]) {
+            display: none !important;
+            margin: 0 !important;
+          }
+        }
+
+        .controls-bottom-lower {
+          margin: 0 !important;
+        }
+      }
+
+      #settings {
+        bottom: 80px !important;
+        right: 0 !important;
+        display: block !important;
+        transition: opacity 0.3s ease, bottom 0.3s ease !important;
+
+        .arrow {
+          display: none !important;
+        }
+
+        /*noinspection CssInvalidFunction*/
+        label, legend {
+          font-family: system-ui !important;
+          color: light-dark(black, white) !important;
+        }
+
+        /*noinspection CssInvalidFunction*/
+        .slider {
+          background-color: rgba(0, 0, 0, 0.07) !important;
+          outline: 1px solid light-dark(#8f8f9d, #bfbfc9) !important;
+
+          /*noinspection CssInvalidFunction*/
+          &::before {
+            background-color: light-dark(#8f8f9d, #bfbfc9) !important;
+          }
+        }
+
+        input {
+          /*noinspection CssInvalidFunction*/
+          &:checked {
+            border-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+          }
+
+          /*noinspection CssInvalidFunction*/
+          &:checked + .slider {
+            background-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+            outline-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+
+            &::before {
+              background-color: white !important;
+            }
+          }
+        }
+
+        /*noinspection CssInvalidFunction*/
+        & > .panel-fieldset {
+          background-color: var(--natsumi-mat-ga-background) !important;
+          backdrop-filter: blur(15px);
+          filter: blur(0);
+          transition: backdrop-filter 0.3s ease, filter 0.3s ease;
+          border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+          box-shadow: 0 0 10px var(--natsumi-mat-ga-shadow-color) !important;
+          padding: 0 !important;
+        }
+
+        /*noinspection CssInvalidFunction*/
+        .grey-line {
+          width: calc(100% - 10px) !important;
+          margin: 0 auto !important;
+          background-color: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+        }
+
+        &.hide {
+          bottom: 70px !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+
+          & > .panel-fieldset {
+            backdrop-filter: none !important;
+            filter: blur(5px);
+          }
+        }
+      }
+
+      &.muted {
+        #controls-bottom {
+          #audio {
+            background-image: url("chrome://browser/skin/zen-icons/media-mute.svg") !important;
+          }
+        }
+      }
+
+      &.playing {
+        #controls-bottom {
+          #playpause {
+            background-image: url("chrome://browser/skin/zen-icons/media-pause.svg") !important;
+          }
+        }
+      }
+    }
+
+    body:fullscreen #controls[showing]:hover, body:not(:fullscreen) #controls:hover {
+      & > button {
+        opacity: 1 !important;
+        top: 10px !important;
+        filter: blur(0) !important;
+      }
+
+      #controls-bottom {
+        opacity: 1 !important;
+        bottom: 5px !important;
+        filter: blur(0);
+
+        @media -moz-pref("natsumi.pip.native-border-radius") {
+          bottom: 0 !important;
+        }
+      }
+    }
+
+    body:fullscreen {
+      &:has(#controls:not([showing])) {
+        cursor: none !important;
+      }
+
+      #controls {
+        #controls-bottom {
+          #fullscreen {
+            background-image: url("chrome://browser/skin/zen-icons/fullscreen-exit.svg") !important;
+          }
+        }
+      }
+    }
+  }
+}
+  @media -moz-pref("natsumi.gamemode.enabled") {
+  * {
+    @media -moz-pref("natsumi.gamemode.gx-color") {
+      --natsumi-primary-color: #ff1f5a !important;
+    }
+    --natsumi-gamemode-background: color-mix(in srgb, var(--natsumi-primary-color) 15%, light-dark(white, black));
+  }
+
+  /* Force marginless compact */
+  :root:not([customizing]) {
+    .customization-target, #PanelUI-button {
+      toolbarbutton {
+        /*noinspection CssInvalidFunction*/
+        .toolbarbutton-icon, .toolbarbutton-badge-stack {
+          transition: background-color 0.2s ease !important;
+
+          @media -moz-pref("natsumi.theme.opaque-icons") {
+            -moz-context-properties: fill;
+            fill: light-dark(black, white);
+          }
+        }
+      }
+    }
+
+    &[zen-compact-mode="true"] {
+      #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
+        margin: 0 !important;
+
+        #zen-tabbox-wrapper {
+          margin: 0 !important;
+
+          .browserSidebarContainer, browser {
+            margin: 0 !important;
+            border-radius: 0 !important;
+          }
+        }
+
+        @media -moz-pref("zen.view.use-single-toolbar") {
+          @media -moz-pref("natsumi.theme.compact-marginless-hide-bookmarks") {
+            #zen-appcontent-navbar-container:not([zen-has-hover]) {
+              min-height: 0 !important;
+              height: 0 !important;
+            }
+          }
+        }
+      }
+
+      /* Add background color */
+      #titlebar, #zen-appcontent-navbar-container {
+        backdrop-filter: none !important;
+        border-radius: 0 !important;
+        background: var(--natsumi-gamemode-background) none !important;
+      }
+    }
+  }
+
+  #zen-main-app-wrapper, #zen-appcontent-wrapper {
+    appearance: initial !important;
+  }
+
+  #browser {
+    background: var(--natsumi-gamemode-background) none !important;
+  }
+
+  browser {
+    clip-path: unset !important;
+  }
+
+  .browserSidebarContainer {
+    border-radius: 0 !important;
+    box-shadow: unset !important;
+  }
+
+  #urlbar {
+    animation: none !important;
+
+    &[breakout-extend] {
+      #urlbar-background {
+        transition: none !important;
+        backdrop-filter: unset !important;
+        background-color: var(--natsumi-gamemode-background) !important;
+        border: 2px solid light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
+        border-radius: 0 !important;
+
+        &::before, &::after {
+          display: none !important;
+        }
+      }
+
+      .urlbarView-body-inner::after {
+        mask-image: unset;
+        width: 100%;
+        border-radius: 0;
+      }
+    }
+
+    .urlbarView-row {
+      animation: none !important;
+      opacity: 1 !important;
+
+      .urlbarView-row-inner {
+        transition: none !important;
+        border-radius: 0 !important;
+      }
+
+      .urlbarView-type-icon {
+        animation: none !important;
+        opacity: 1 !important;
+      }
+
+      &:hover {
+        .urlbarView-row-inner {
+          transform: unset !important;
+        }
+      }
+    }
+  }
+
+  findbar {
+    transition: none !important;
+    animation: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: unset !important;
+    background-color: var(--natsumi-gamemode-background) !important;
+
+    &:has(.findbar-textbox:is([status="notfound"])) {
+      box-shadow: none !important;
+      background-color: var(--natsumi-gamemode-background) !important;
+    }
+
+    &[hidden], &::before {
+      display: none !important;
+    }
+
+    &::after {
+      border-radius: 0 !important;
+      mask-image: none !important;
+    }
+
+    hbox[anonid="findbar-textbox-wrapper"]::after {
+      mask-image: none !important;
+      width: 100% !important;
+    }
+  }
+
+  #zen-main-app-wrapper:not(:has(#zen-welcome)) #tabbrowser-tabs:not([movingtab]) {
+    .tabbrowser-tab:active {
+      scale: 1 !important;
+    }
+
+    #zen-essentials-container {
+      .tabbrowser-tab {
+        &:active {
+          scale: 1 !important;
+        }
+      }
+    }
+  }
+
+  .tabbrowser-tab {
+    .tab-background {
+      border-radius: 0 !important;
+    }
+  }
+
+  #vertical-pinned-tabs-container, #tabbrowser-arrowscrollbox {
+    /*noinspection CssInvalidFunction*/
+    .tabbrowser-tab:not([zen-glance-tab]) {
+      .tab-background {
+        animation: none !important;
+        backdrop-filter: unset !important;
+
+        &::after {
+          border-radius: 0 !important;
+          width: calc(100% - var(--natsumi-tabs-blade-size-offset) - calc(var(--tab-block-margin) * 2)) !important;
+          height: calc(100% - var(--natsumi-tabs-blade-size-offset) - calc(var(--tab-block-margin) * 2)) !important;
+          top: var(--natsumi-tabs-blade-position-offset) !important;
+          left: var(--natsumi-tabs-blade-position-offset) !important;
+          mask-image: unset !important;
+        }
+      }
+    }
+  }
+
+  #zen-essentials-container {
+    .tabbrowser-tab:not([zen-glance-tab]) {
+      .tab-stack {
+        &::before {
+          display: none !important;
+        }
+
+        .tab-background {
+          &::before {
+            border-radius: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+  tab-group {
+    border-radius: 0 !important;
+    scale: 1 !important;
+  }
+
+  #sidebar-box {
+    transition: unset !important;
+    backdrop-filter: unset !important;
+    background-color: var(--natsumi-gamemode-background) !important;
+    border-radius: 0 !important;
+  }
+  
+  #zen-media-controls-toolbar {
+    & > toolbaritem {
+      backdrop-filter: none !important;
+      border-radius: 0 !important;
+      background: color-mix(in srgb, var(--natsumi-primary-color) 30%, light-dark(white, black)) !important;
+      
+      &::before, &::after {
+        display: none !important;
+      }
+    }
+  }
+  
+  #zen-workspaces-button .subviewbutton[active] {
+    backdrop-filter: none !important;
+  }
+}
+  @keyframes mistcrylic-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
+@keyframes haze-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-mat-hz-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-mat-hz-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
+@keyframes glass-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
+@media not -moz-pref("natsumi.sidebar.ff-sidebar-opaque") {
+  /*noinspection CssUnknownProperty*/
+  #sidebar-box {
+    border: none !important;
+    box-shadow: none !important;
+
+    @media not -moz-pref("natsumi.sidebar.ff-sidebar-float") {
+      background-color: transparent !important;
+    }
+
+    /*noinspection CssUnknownProperty*/
+    #sidebar-header {
+      border-bottom: none !important;
+    }
+  }
+
+  /* Force background to be transparent */
+  .sidebar-panel {
+    background: transparent !important;
+  }
+}
+
+@media -moz-pref("natsumi.sidebar.ff-sidebar-float") {
+  #sidebar-splitter {
+    display: none;
+  }
+
+  /*noinspection CssInvalidFunction*/
+  #sidebar-box {
+    position: absolute;
+    height: calc(100% - 40px);
+    min-width: 180px !important;
+    min-height: 180px !important;
+    max-width: calc(100% - calc(var(--natsumi-sidebar-x-offset) * 2));
+    max-height: calc(100% - calc(var(--natsumi-sidebar-y-offset) * 2));
+    left: var(--natsumi-sidebar-x-offset);
+    margin-top: var(--natsumi-sidebar-y-offset);
+    z-index: 999;
+    opacity: 1;
+    transition: left 0.2s ease, right 0.2s ease, opacity 0.2s ease !important;
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-position-center") {
+      margin-top: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-position-bottom") {
+      margin-top: 0;
+      margin-bottom: 20px !important;
+      top: unset;
+      transform: unset;
+      bottom: 0;
+    }
+
+    @media not -moz-pref("sidebar.position_start") {
+      left: unset;
+      right: var(--natsumi-sidebar-x-offset);
+    }
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-mistcrylic") {
+      background-color: var(--natsumi-mat-mc-background) !important;
+      backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+      box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+      &::before {
+        content: "";
+        position: absolute;
+        background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+        opacity: 0.2;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+      }
+    }
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-haze") {
+      background-color: var(--natsumi-mat-hz-background) !important;
+      backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+      box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+      @media -moz-pref("natsumi.sidebar.ff-sidebar-tinted-haze") {
+        background-color: var(--natsumi-mat-hz-background-tinted) !important;
+      }
+    }
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-glass") {
+      background-color: var(--natsumi-mat-ga-background) !important;
+      backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+      box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+    }
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-mistcrylic") or
+    -moz-pref("natsumi.sidebar.ff-sidebar-haze") or
+    -moz-pref("natsumi.sidebar.ff-sidebar-glass")
+    {
+      border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+      /*noinspection CssInvalidFunction*/
+      #sidebar-header {
+        margin-left: 8px;
+        margin-right: 8px;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        border-bottom: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+      }
+    }
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-resizable") {
+      resize: both;
+    }
+
+    &[hidden] {
+      display: flex;
+      left: calc(var(--natsumi-sidebar-x-offset) - 20px);
+      opacity: 0;
+      pointer-events: none !important;
+
+      @media not -moz-pref("sidebar.position_start") {
+        left: auto;
+        right: calc(var(--natsumi-sidebar-x-offset) - 20px);
+      }
+
+      @media -moz-pref("natsumi.sidebar.ff-sidebar-mistcrylic") {
+        animation: mistcrylic-disappear 0.2s linear !important;
+      }
+
+      @media -moz-pref("natsumi.sidebar.ff-sidebar-haze") {
+        animation: haze-disappear 0.2s linear !important;
+      }
+
+      @media -moz-pref("natsumi.sidebar.ff-sidebar-glass") {
+        animation: glass-disappear 0.2s linear !important;
+      }
+
+      animation-fill-mode: forwards !important;
+    }
+  }
+
+  @media not -moz-pref("natsumi.theme.disable-blur") {
+    @media not -moz-pref("natsumi.sidebar.ff-panel-opaque") {
+      #browser:has(#sidebar-box:not([hidden])) .deck-selected browser {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+
+    @media -moz-pref("natsumi.sidebar.ff-sidebar-mistcrylic") or
+    -moz-pref("natsumi.sidebar.ff-sidebar-haze") or
+    -moz-pref("natsumi.sidebar.ff-sidebar-glass")
+    {
+      #browser:has(#sidebar-box:not([hidden])) .deck-selected browser {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+  }
+}
+
+/* ==== Tabs sidebar tweaks ==== */
+
+@media -moz-pref("natsumi.sidebar.tabs-glass-effect") {
+  :root[zen-compact-mode="true"]:not([customizing]) {
+    /*noinspection CssInvalidFunction*/
+    @media -moz-pref("zen.view.compact.hide-tabbar") {
+      #navigator-toolbox:not([animate]) {
+        #titlebar {
+          background: var(--natsumi-mat-ga-background) !important;
+          border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+          backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius)) !important;
+
+          /*noinspection CssInvalidFunction*/
+          @media not -moz-pref("natsumi.theme.disable-glass-shadow") {
+            box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+          }
+        }
+
+        #tabbrowser-arrowscrollbox-periphery::before{
+          background: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+        }
+
+
+        /*noinspection CssInvalidFunction*/
+        @media -moz-pref("zen.view.show-bottom-border") {
+          #TabsToolbar-customization-target::after {
+            background: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+          }
+        }
+      }
+
+      @media not -moz-pref("natsumi.theme.disable-blur") {
+        #browser:has(#navigator-toolbox:is([zen-has-hover], [zen-user-show])) .deck-selected browser {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+      }
+    }
+  }
+}
+  @keyframes glass-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
+:root[zen-compact-mode="true"]:not([customizing]) {
+  @media -moz-pref("zen.view.compact.hide-toolbar") {
+    /*noinspection CssInvalidFunction*/
+    @media -moz-pref("natsumi.navbar.glass-effect") {
+      #zen-appcontent-navbar-container {
+        padding: 0 !important;
+        width: calc(100vw - 2px) !important;
+        background: var(--natsumi-mat-ga-background) !important;
+        border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+        backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius)) !important;
+
+        &:not([zen-has-hover], [zen-user-show], :focus-within, :has(:is([panelopen="true"], [open="true"]):not(.zen-compact-mode-ignore)), [has-popup-menu]) {
+          backdrop-filter: none !important;
+        }
+
+        /*noinspection CssInvalidFunction*/
+        @media not -moz-pref("natsumi.theme.disable-glass-shadow") {
+          box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+        }
+      }
+
+      @media -moz-pref("natsumi.navbar.float") {
+        #zen-appcontent-navbar-container {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          backdrop-filter: none !important;
+          padding: 5px !important;
+          padding-top: 6px !important;
+          padding-bottom: 0 !important;
+          width: calc(100% - 10px) !important;
+
+          /*noinspection CssInvalidFunction*/
+          &::after {
+            content: "";
+            background: var(--natsumi-mat-ga-background) !important;
+            border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+            backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius)) !important;
+            position: absolute;
+            width: calc(100% - 12px);
+            height: calc(100% - 7px);
+            top: 6px;
+            left: 5px;
+            z-index: -999;
+            border-radius: 6px !important;
+          }
+
+          &:not([zen-has-hover], [zen-user-show], :focus-within, :has(:is([panelopen="true"], [open="true"]):not(.zen-compact-mode-ignore)), [has-popup-menu]) {
+            top: calc((-1 * var(--zen-toolbar-height)) + var(--zen-element-separation) - 4px) !important;
+
+            &::after {
+              backdrop-filter: none !important;
+            }
+          }
+        }
+      }
+
+      @media not -moz-pref("natsumi.theme.disable-blur") {
+        #browser:has(#zen-appcontent-navbar-container:is([zen-has-hover], [zen-user-show], :focus-within)) {
+          .deck-selected browser, .browserSidebarContainer[zen-split] browser {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+          }
+        }
+      }
+    }
+  }
+}
+  @media (-moz-platform: macos) {
+  menuitem, menu {
+    &::before {
+      display: none !important;
+    }
+
+    &:is([type="checkbox"], [type="radio"]) {
+      padding-left: 10px !important;
+
+      .menu-iconic-left {
+        display: none !important;
+      }
+
+      .menu-iconic-text {
+        padding-left: 12px !important;
+      }
+
+      &::before {
+        display: block !important;
+        content: "" !important;
+        padding: 0 !important;
+        min-width: 16px !important;
+      }
+
+      &:is([checked="true"]) {
+        &::before {
+          content: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
+
+          @media (prefers-color-scheme: dark) {
+            filter: invert();
+          }
+        }
+      }
+    }
+  }
+
+  menupopup menupopup menuitem[checked="true"]::before {
+    filter: none !important;
+  }
+}
+  @media -moz-pref("natsumi.experiments.custom-font") {
+  #zen-main-app-wrapper, .tab-label, menuitem, panelmultiview, .PanelUI-zen-profiles-item-name {
+    font-family: var(--natsumi-custom-font), system-ui !important;
+  }
+}
+
+/* WIP thing for tab switching */
+
+/*.ctrlTab-preview:hover {
+  border: none !important;
+}
+
+.ctrlTab-preview-inner {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+
+  .ctrlTab-canvas {
+    box-shadow: none !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .ctrlTab-favicon-container {
+    width: fit-content !important;
+    height: fit-content !important;
+  }
+
+  .ctrlTab-favicon {
+    background: transparent !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .ctrlTab-label {
+    flex: 1 !important;
+    flex-shrink: 0 !important;
+    justify-content: left !important;
+
+    &::before {
+      text-shadow: none !important;
+      font-size: 14px !important;
+      margin: auto 0 !important;
+    }
+  }
+}*/
+  @media not (-moz-bool-pref: "natsumi.sidebar.disable-bigger-tab-label") {
+  .tab-text {
+    font-size: 12px;
+  }
+
+  /* Separately applying here as we need to use !important */
+  input#tab-label-input {
+    font-size: 12px !important;
+  }
+}
+
+
+
+/* ==== Better Split View ==== */
+#zen-tabbox-wrapper:has(#tabbrowser-tabpanels[zen-split-view="true"]) {
+  margin-bottom: calc(var(--zen-element-separation) - calc(var(--zen-split-row-gap) / 2 + 1px)) !important;
+}
+
+.browserSidebarContainer[zen-split="true"] {
+  margin-bottom: calc(var(--zen-split-row-gap) / 2 + 1px) !important;
+}
+
+.zen-split-view-splitter {
+  &::before {
+    opacity: 0.4 !important;
+    transition: opacity 0.2s ease;
+    background: var(--natsumi-primary-color) !important;
+  }
+
+  &:hover::before {
+    opacity: 1 !important;
+  }
+
+  &:is([orient="horizontal"]) {
+    margin-top: calc(var(--zen-split-column-gap) / -1.4) !important;
+    height: calc(var(--zen-element-separation) * 2 - 3px) !important;
+
+    &::before {
+      height: 3px;
+      width: 30px;
+      background: var(--zen-colors-border);
+      border-radius: 2px;
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.1s ease-in-out;
+      pointer-events: none;
+    }
+  }
+}
+
+
+
+/* ==== Dialog box animation ==== */
+
+@keyframes overlay-appear {
+  0% {
+    background-color: transparent;
+  }
+
+  100% {
+    background-color: rgba(28, 27, 34, 0.45);
+  }
+}
+
+@keyframes dialog-appear {
+  0% {
+    opacity: 0;
+    margin-top: 50px;
+    margin-bottom: -50px;
+  }
+
+  100% {
+    opacity: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.browserStack .dialogOverlay:not([hidden="true"]) {
+  animation: overlay-appear 0.3s ease;
+
+  .dialogBox {
+    animation: dialog-appear 0.3s ease;
+  }
+}
+
+/* can't get bg fadein to work here for some reason, help would be appreciated */
+
+@keyframes menupopup-appear {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+#window-modal-dialog[open] {
+  animation: dialog-appear 0.3s ease;
+}
+
+/* ==== Menu items animation ==== */
+
+/* I could just use button to remove a lot of these, but that'd be risky */
+.dialog-button-box button, menulist, richlistitem, .urlbar-page-action,
+#tracking-protection-icon-container, .identity-box-button,
+.panel-subview-body toolbarbutton, .panel-subview-footer-button,
+.subviewbutton-back, .panel-info-button, .protections-popup-footer-button,
+.bookmark-item, .zen-workspace-button, #PanelUI-zen-workspaces-reorder-mode,
+#PanelUI-zen-workspaces-new, menupopup menuitem, menupopup menu,
+#PanelUI-zen-profiles-list .PanelUI-zen-profiles-item,
+#PanelUI-zen-profiles-actions toolbarbutton,
+#TabsToolbar-customization-target toolbarbutton, .findbar-container toolbarbutton,
+#sidebar-switcher-target {
+  transition: background-color 0.2s ease;
+}
+
+menulist[open="true"] menupopup {
+  animation: menupopup-appear 0.2s ease;
+}
+
+#downloadsHistory, .downloadButton, #editBookmarkPanelRemoveButton, #editBookmarkPanelDoneButton,
+.findbar-closebutton {
+  transition: 0.2s ease !important;
+}
+
+#PanelUI-zen-workspaces-list {
+  .zen-workspace-button {
+    &:is([active]) {
+      .zen-workspace-icon {
+        border: 1px solid var(--toolbarbutton-icon-fill-attention) !important;
+        background: color-mix(in srgb, var(--toolbarbutton-icon-fill-attention) 50%, transparent) !important;
+        &::before {
+          display: none;
+        }
+      }
+
+      /*noinspection CssInvalidFunction*/
+      .zen-workspace-name {
+        color: color-mix(in srgb, var(--toolbarbutton-icon-fill-attention) 70%, light-dark(black, white)) !important;
+      }
+    }
+  }
+}
+
+/* Elongate the pinned tabs section */
+#vertical-pinned-tabs-container {
+  @media (-moz-bool-pref: "natsumi.sidebar.unlimited-pinned-tabs") {
+    max-height: none !important;
+  }
+}
+  * {
+  --natsumi-fail-display: none !important;
+}
+  
+  * {
+  --natsumi-fail-display: flex;
+}
+
+@keyframes natsumi-not-installed-fadeout {
+  0% {opacity: 1;}
+  90% {opacity: 1;}
+  99% {opacity: 0; height: 20%;}
+  100% {opacity: 0; height: 0; display: none;}
+}
+
+#tabbrowser-arrowscrollbox::after {
+  display: var(--natsumi-fail-display);
+  box-sizing: border-box;
+  contain: size;
+  padding: 10px;
+  font-size: 12px;
+  color: black;
+  content: "WARNING: Natsumi Browser loader is installed but it could not load Natsumi Browser.\
+    Please add the natsumi-config.css file and natsumi folder to your profile's chrome folder, then restart Zen Browser!\
+  ";
+  width: 100%;
+  height: 20%;
+  border-radius: var(--border-radius-medium);
+  border: 1px solid;
+  background-color: #ffdd00;
+  text-align: center;
+  animation: natsumi-not-installed-fadeout ease 10s;
+  animation-fill-mode: forwards;
+}
+}
+
+@-moz-document regexp("^(?!chrome:).*") {
+  * {
+  /* Accent color */
+  --natsumi-accent-color: var(--zen-primary-color);
+  --natsumi-pages-accent-color: #a0d490;
+
+  /* Natsumi Glass Effect */
+  --glass-blur-radius: 20px;
+  --glass-shadow-size: 10px;
+  --glass-shadow-opacity: 75%;
+
+  /* Natsumi URLbar appear animations */
+  --urlbar-appear-animation-duration: 0.25s;
+  --urlbar-results-animation-duration: 0.5s;
+  --urlbar-individual-result-animation-duration: 0.75s;
+  --urlbar-individual-result-animation-delay: 0.05s;
+  --urlbar-individual-result-animation-delay-offset: 0.05s;
+  --urlbar-individual-result-expand-size: 1.05;
+
+  /* Natsumi border reload animations */
+  --reload-border-animation-duration: 0.2s;
+  --reload-border-animation-rotation-duration: 2s;
+  --reload-border-animation-exit-duration: 1s;
+  --reload-border-margin: 4px;
+
+  /* Natsumi URLbar reload animations */
+  --reload-urlbar-animation-duration: 0.2s;
+  --reload-urlbar-animation-fadein-duration: 2s;
+
+  /* Container tabs gradient */
+  --container-tabs-normal-gradient-width: 25%;
+  --container-tabs-expanded-gradient-width: 50%;
+
+  /* Floating Firefox sidebar panels */
+  --ff-sidebar-x-offset: 20px;
+  --ff-sidebar-y-offset: 20px;
+
+  /* Custom fonts experiment (must be an installed font) */
+  --custom-font: 'Nunito';
+
+  /* pdf.js */
+  --pdfjs-topbar-max-width: 750px; /* use calc(100% - 10px) for max width */
+
+  /* FF home */
+  --home-background-url: url('');
+}
+  * {
+  /* Colors */
+  --natsumi-primary-color: var(--natsumi-pages-accent-color, #aac7ff);
+  --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+  --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
+  --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 2%, white 98%);
+  --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, #202020 80%);
+    --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, #202020 70%);
+    --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 1%, #202020 99%);
+    --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+
+    @media -moz-pref('zen.theme.color-prefs.colorful') {
+      --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+      --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 40%, black 60%);
+      --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 15%, black 85%);
+      --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+    }
+  }
+
+  /* Material: Mistcrylic */
+  --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-primary-color) 40%, rgba(255, 255, 255, 0.8));
+  --natsumi-mat-mc-shadow-color: rgba(0, 0, 0, 0.3);
+  --natsumi-mat-mc-border-color: rgba(255, 255, 255, 0.1);
+  --natsumi-mat-mc-shadow-size: 10px;
+  --natsumi-mat-mc-blur-radius: 15px;
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-colors-secondary) 50%, rgba(0, 0, 0, 0.8));
+  }
+
+  /* Material: Haze */
+  --natsumi-mat-hz-background: rgba(255, 255, 255, 0.8);
+  --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-primary-color) 20%, rgba(255, 255, 255, 0.8));
+  --natsumi-mat-hz-blur-radius: 100px;
+  --natsumi-mat-hz-shadow-color: rgba(0, 0, 0, 0.3);
+  --natsumi-mat-hz-shadow-size: 10px;
+  --natsumi-mat-hz-saturation: 3;
+  --natsumi-mat-hz-contrast: 2;
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-hz-background: rgba(0, 0, 0, 0.8);
+    --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-colors-secondary) 20%, rgba(0, 0, 0, 0.8));
+  }
+
+  /* Material: Glass */
+  --natsumi-mat-ga-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
+  --natsumi-mat-ga-blur-radius: 10px;
+  --natsumi-mat-ga-shadow-size: 10px;
+  --natsumi-mat-ga-shadow-opacity: 75%;
+  --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), black);
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), white);
+
+    @media -moz-pref("natsumi.theme.force-glass-dark-shadows") {
+      --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), black);
+    }
+  }
+
+  /* pdf.js */
+  --natsumi-pdfjs-topbar-max-width: var(--pdfjs-topbar-max-width, 750px);
+
+  /* FF home */
+  --natsumi-home-bg: var(--home-background-url, none);
+}
+  @keyframes pdfjs-appear {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes secondary-appear {
+  0% {
+    opacity: 0;
+    margin-top: -10px;
+    filter: blur(5px);
+  }
+
+  100% {
+    opacity: 1;
+    margin-top: 0;
+    filter: blur(0);
+  }
+}
+
+@keyframes properties-appear {
+  0% {
+    opacity: 0;
+    top: 50px;
+  }
+
+  100% {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+@media not -moz-pref("natsumi.pdfjs.disabled") {
+  html[mozdisallowselectionprint] {
+    &:has(head link:nth-of-type(1)[href^="resource://pdf.js"]) {
+      --natsumi-colors-border: color-mix(in srgb, var(--natsumi-colors-secondary) 80%, black 20%);
+      --toolbarbutton-active-background: rgba(255, 255, 255, 0.9);
+      --toolbarbutton-hover-background: color-mix(in srgb, #202020 10%, transparent);
+
+      @media (prefers-color-scheme: dark) {
+        --toolbarbutton-active-background: color-mix(in srgb, var(--natsumi-primary-color) 50%, rgba(255, 255, 255, .1));
+        --toolbarbutton-hover-background: color-mix(in srgb, #ebebeb 10%, transparent);
+      }
+
+      body {
+        @media (prefers-color-scheme: dark) {
+          background-color: color-mix(in srgb, var(--natsumi-colors-tertiary) 70%, #0f0f0f 30%) !important;
+        }
+      }
+
+      #viewerContainer {
+        inset: 0 !important;
+
+        #viewer > .page:first-of-type,
+        #viewer .spread:first-of-type .page {
+          margin-top: 43px !important;
+          transition: margin-top 0.3s ease;
+        }
+      }
+
+      .toolbar {
+        width: 100%;
+        height: 10px;
+
+        @media -moz-pref("natsumi.theme.compact-marginless") {
+          height: 15px;
+        }
+      }
+
+      #toolbarContainer, #sidebarContainer {
+        background: var(--natsumi-mat-ga-background) !important;
+        border-radius: 10px;
+        backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+        box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+
+        @media -moz-pref("natsumi.pdfjs.material-haze") {
+          background: var(--natsumi-mat-hz-background) !important;
+          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+          @media -moz-pref("natsumi.pdfjs.material-tinted-haze") {
+            background: var(--natsumi-mat-hz-background-tinted) !important;
+          }
+        }
+
+        @media -moz-pref("natsumi.pdfjs.material-mistcrylic") {
+          background: var(--natsumi-mat-mc-background) !important;
+          backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+          &::before {
+            content: "";
+            position: absolute;
+            background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+            opacity: 0.2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+          }
+        }
+      }
+
+      #toolbarContainer {
+        position: absolute !important;
+        top: 5px !important;
+        left: 50% !important;
+        transform: translate(-50%, 0);
+        width: calc(100% - 10px) !important;
+        max-width: min(var(--natsumi-pdfjs-topbar-max-width), calc(100% - 10px)) !important;
+        border-radius: 10px;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        height: calc(var(--toolbar-height) + 10px) !important;
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+        animation: pdfjs-appear 0.3s ease;
+        overflow: hidden !important;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+
+        &:has(#loadingBar.hidden) {
+          overflow: visible !important;
+        }
+
+        #toolbarViewer {
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+
+        .doorHangerRight {
+          padding: 5px !important;
+          top: 40px !important;
+          right: -7px !important;
+          background: var(--natsumi-mat-ga-background) !important;
+          backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+          border-radius: 10px !important;
+          border: 1px solid rgba(20, 20, 20, 0.2) !important;
+          box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+          animation: secondary-appear 0.3s ease;
+
+          @media -moz-pref("natsumi.pdfjs.material-haze") {
+            background: var(--natsumi-mat-hz-background) !important;
+            backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+            box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+            @media -moz-pref("natsumi.pdfjs.material-tinted-haze") {
+              background: var(--natsumi-mat-hz-background-tinted) !important;
+            }
+          }
+
+          @media -moz-pref("natsumi.pdfjs.material-mistcrylic") {
+            background: var(--natsumi-mat-mc-background) !important;
+            backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+            box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+            &::before {
+              content: "";
+              position: absolute;
+              background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+              opacity: 0.2;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              left: 0;
+              pointer-events: none;
+            }
+          }
+
+          &.hidden {
+            animation: none !important;
+          }
+
+          @media (prefers-color-scheme: dark) {
+            border-color: rgba(235, 235, 235, 0.3) !important;
+          }
+
+          &::before, &::after {
+            display: none !important;
+          }
+        }
+
+        .thicknessPicker {
+          &::before, &::after {
+            @media (prefers-color-scheme: dark) {
+              background-color: white !important;
+            }
+          }
+        }
+
+        #loadingBar {
+          top: unset !important;
+          bottom: 0 !important;
+          border: none !important;
+
+          .progress {
+            background-color: var(--natsumi-primary-color) !important;
+          }
+        }
+      }
+
+      #sidebarContainer {
+        height: calc(100% - 62px) !important;
+        left: -5px !important;
+        top: auto !important;
+        bottom: 5px !important;
+        opacity: 0 !important;
+        transition: left 0.2s ease, opacity 0.2s ease, filter 0.2s ease !important;
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+        filter: blur(5px);
+
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+
+        #toolbarSidebar {
+          background: transparent !important;
+          box-shadow: none !important;
+          padding: 5px !important;
+          height: calc(var(--toolbar-height) + 10px) !important;
+        }
+
+        #sidebarContent {
+          margin-top: 10px !important;
+          box-shadow: none !important;
+        }
+
+        .treeItem {
+          a, .treeItems {
+            border-radius: 5px !important;
+            transition: background-color 0.2s ease;
+          }
+
+          .treeItemToggler {
+            &::before {
+              background-color: transparent !important;
+              mask-image: none !important;
+              background-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+
+              @media (prefers-color-scheme: dark) {
+                filter: invert();
+              }
+            }
+
+            &.treeItemsHidden::before {
+              background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
+            }
+          }
+        }
+
+        .thumbnail {
+          margin-bottom: 22px !important;
+          transition: border-color 0.2s ease;
+
+          &::after {
+            content: attr(data-page-number);
+            display: block;
+            color: black;
+            width: 100%;
+            margin-top: 8px;
+            text-align: center;
+
+            @media (prefers-color-scheme: dark) {
+              color: white;
+            }
+          }
+        }
+      }
+
+      #outerContainer.sidebarOpen #sidebarContainer {
+        left: 5px !important;
+        opacity: 1 !important;
+        filter: blur(0);
+      }
+
+      #scaleSelectContainer {
+        border-radius: 4px !important;
+        overflow: hidden !important;
+
+        select {
+          background-color: #f1f1f1 !important;
+
+          @media (prefers-color-scheme: dark) {
+            background-color: #363636 !important;
+          }
+        }
+      }
+
+      #pageNumber {
+        border-radius: 4px !important;
+        overflow: hidden !important;
+        background-color: #ffffff !important;
+        border-color: var(--natsumi-colors-border) !important;
+
+        @media (prefers-color-scheme: dark) {
+          background-color: #23222b !important;
+        }
+      }
+
+      .verticalToolbarSeparator, .splitToolbarButtonSeparator, .horizontalToolbarSeparator, .separator {
+        border-color: rgba(20, 20, 20, 0.2) !important;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+      }
+
+      #editorHighlightVisibility .divider {
+        background-color: rgba(20, 20, 20, 0.2) !important;
+
+        @media (prefers-color-scheme: dark) {
+          background-color: rgba(235, 235, 235, 0.3) !important;
+        }
+      }
+
+      .toolbarButton {
+        border-radius: 6px !important;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: var(--toolbarbutton-hover-background) !important;
+        }
+
+        &.toggled {
+          background-color: var(--toolbarbutton-active-background) !important;
+        }
+
+        &::before {
+          mask-size: contain !important;
+          mask-repeat: no-repeat;
+          -moz-context-properties: fill;
+        }
+      }
+
+      /* Document properties */
+
+      #documentPropertiesDialog {
+        background: var(--natsumi-mat-ga-background) !important;
+        backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+        border-radius: 10px !important;
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+        box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+
+        @media -moz-pref("natsumi.pdfjs.material-haze") {
+          background: var(--natsumi-mat-hz-background) !important;
+          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+          @media -moz-pref("natsumi.pdfjs.material-tinted-haze") {
+            background: var(--natsumi-mat-hz-background-tinted) !important;
+          }
+        }
+
+        @media -moz-pref("natsumi.pdfjs.material-mistcrylic") {
+          background: var(--natsumi-mat-mc-background) !important;
+          backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+          &::before {
+            content: "";
+            position: absolute;
+            background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+            opacity: 0.2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+          }
+        }
+
+        &:is([open]) {
+          animation: properties-appear 0.3s ease !important;
+        }
+
+        #documentPropertiesClose {
+          border-radius: 5px !important;
+          background-color: #f1f1f1 !important;
+
+          @media (prefers-color-scheme: dark) {
+            background-color: #363636 !important;
+          }
+        }
+      }
+
+      /* Compact mode */
+
+      @media -moz-pref("natsumi.pdfjs.compact") {
+        .toolbar {
+          #toolbarContainer {
+            opacity: 0 !important;
+            pointer-events: none;
+            top: -5px !important;
+            transition: opacity 0.3s ease, top 0.3s ease, filter 0.3s ease;
+            filter: blur(5px);
+          }
+
+          &:hover, &:has(.toolbarButton:not(#sidebarToggleButton)[aria-expanded="true"]),
+          &:has(input:focus), &:has(select:focus) {
+            height: 52px;
+
+            #toolbarContainer {
+              top: 5px !important;
+              opacity: 1 !important;
+              pointer-events: auto;
+              filter: blur(0);
+            }
+          }
+        }
+
+        @media -moz-pref("natsumi.pdfjs.compact-dynamic") {
+          .toolbar:has(#sidebarToggleButton[aria-expanded="true"]) {
+            height: 52px;
+
+            #toolbarContainer {
+              top: 5px !important;
+              opacity: 1 !important;
+              pointer-events: auto;
+              filter: blur(0);
+            }
+          }
+
+          &:has(#sidebarToggleButton:not([aria-expanded="true"])) {
+            #viewer > .page:first-of-type,
+            #viewer .spread:first-of-type .page {
+              margin-top: 0 !important;
+            }
+          }
+        }
+
+        @media not -moz-pref("natsumi.pdfjs.compact-dynamic") {
+          #viewer > .page:first-of-type,
+          #viewer .spread:first-of-type .page {
+            margin-top: 0 !important;
+          }
+        }
+      }
+
+      /* Topbar buttons */
+
+      #previous::before {
+        mask-image: url('chrome://browser/skin/zen-icons/arrow-up.svg') !important;
+      }
+
+      #next::before {
+        mask-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+      }
+
+      #zoomOutButton::before {
+        mask-image: url('chrome://browser/skin/zen-icons/zoom-out.svg') !important;
+      }
+
+      #zoomInButton::before {
+        mask-image: url('chrome://browser/skin/zen-icons/plus.svg') !important;
+      }
+
+      #sidebarToggleButton::before {
+        mask-image: url('chrome://browser/skin/zen-icons/sidebar.svg') !important;
+      }
+
+      #editorHighlightButton::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-editorHighlight.svg') !important;
+      }
+
+      #editorFreeTextButton::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-editorFreeText.svg') !important;
+      }
+
+      #editorInkButton::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-editorInk.svg') !important;
+      }
+
+      #editorStampButton::before {
+        mask-image: url('chrome://browser/skin/zen-icons/canvas.svg') !important;
+      }
+
+      #secondaryPrint::before, #printButton::before {
+        mask-image: url('chrome://browser/skin/zen-icons/print.svg') !important;
+      }
+
+      #secondaryDownload::before, #downloadButton::before {
+        mask-image: url('chrome://browser/skin/zen-icons/save.svg') !important;
+      }
+
+      #presentationMode::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-presentationMode.svg') !important;
+      }
+
+      #viewBookmark::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-bookmark.svg') !important;
+      }
+
+      #firstPage::before {
+        mask-image: url('chrome://browser/skin/zen-icons/arrow-up.svg') !important;
+      }
+
+      #lastPage::before {
+        mask-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+      }
+
+      #pageRotateCw::before {
+        mask-image: url('chrome://browser/skin/zen-icons/reload.svg') !important;
+      }
+
+      #pageRotateCcw::before {
+        transform: scaleX(-1);
+        mask-image: url('chrome://browser/skin/zen-icons/reload.svg') !important;
+      }
+
+      #cursorSelectTool::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-selectTool.svg') !important;
+      }
+
+      #cursorHandTool::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-handTool.svg') !important;
+      }
+
+      #scrollPage::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollPage.svg') !important;
+      }
+
+      #scrollVertical::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollVertical.svg') !important;
+      }
+
+      #scrollHorizontal::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollHorizontal.svg') !important;
+      }
+
+      #scrollWrapped::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollWrapped.svg') !important;
+      }
+
+      #spreadNone::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadNone.svg') !important;
+      }
+
+      #spreadOdd::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadOdd.svg') !important;
+      }
+
+      #spreadEven::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadEven.svg') !important;
+      }
+
+      #documentProperties::before {
+        mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-documentProperties.svg') !important;
+      }
+
+      #editorStampAddImage::before {
+        mask-image: url('chrome://browser/skin/zen-icons/plus.svg') !important;
+      }
+
+      #secondaryToolbarToggleButton::before {
+        mask-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
+      }
+
+      /* Sidebar buttons */
+
+      #viewThumbnail::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewThumbnail.svg') !important;
+      }
+
+      #viewOutline::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewOutline.svg') !important;
+      }
+
+      #viewAttachments::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewAttachments.svg') !important;
+      }
+
+      #viewLayers::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-viewLayers.svg') !important;
+      }
+
+      #currentOutlineItem::before {
+        mask-image: url('resource://pdf.js/web/images/toolbarButton-currentOutlineItem.svg') !important;
+      }
+
+      /* Checked buttons */
+
+      #secondaryToolbarButtonContainer .toolbarButton[aria-checked="true"]::before {
+        mask-image: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
+      }
+    }
+  }
+}
+  @keyframes modal-overlay-fadein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-fadein {
+  0% {
+    opacity: 0;
+    margin-top: 10px;
+  }
+
+  100% {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+@media not -moz-pref("natsumi.home.disabled") {
+  @-moz-document url-prefix(about:home), url-prefix(about:newtab), url-prefix(about:privatebrowsing) {
+    :root {
+      --natsumi-colors-border: color-mix(in srgb, var(--natsumi-colors-secondary) 80%, black 20%);
+      --toolbarbutton-active-background: rgba(255, 255, 255, 0.9);
+      --toolbarbutton-hover-background: color-mix(in srgb, #202020 10%, transparent);
+      --newtab-weather-background-color: transparent !important;
+
+      @media (prefers-color-scheme: dark) {
+        --toolbarbutton-active-background: color-mix(in srgb, var(--natsumi-primary-color) 50%, rgba(255, 255, 255, .1));
+        --toolbarbutton-hover-background: color-mix(in srgb, #ebebeb 10%, transparent);
+      }
+    }
+
+    @media -moz-pref("natsumi.home.custom-background") {
+      body {
+        background-image: var(--natsumi-home-bg) !important;
+      }
+    }
+
+    .promo {
+      display: none !important;
+    }
+
+    .customize-menu {
+      height: calc(100% - 20px) !important;
+      top: 10px !important;
+      right: 0 !important;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: var(--natsumi-mat-hz-background) !important;
+      backdrop-filter: none !important;
+      border: 1px solid rgba(20, 20, 20, 0.2) !important;
+      opacity: 0 !important;
+      transform: none !important;
+      transition: opacity 0.2s ease, right 0.2s ease, backdrop-filter 0.2s ease !important;
+      visibility: visible !important;
+      animation: none !important;
+      pointer-events: none !important;
+      box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+      @media (prefers-color-scheme: dark) {
+        border-color: rgba(235, 235, 235, 0.3) !important;
+      }
+
+      .close-button-wrapper {
+        background: transparent !important;
+      }
+
+      .divider {
+        border-color: rgba(20, 20, 20, 0.2) !important;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+      }
+
+      h2 {
+        font-size: 18px !important;
+        font-weight: 500 !important;
+      }
+
+      &.customize-animate-enter, &.customize-animate-enter-done {
+        right: 10px !important;
+        opacity: 1 !important;
+        backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+        pointer-events: all !important;
+      }
+
+      .wallpaper-list {
+        background: transparent !important;
+      }
+
+      .close-button, .category-header, .category-list, #shortcuts-section, #recent-section, #weather-section, .divider, #settings-link {
+        transition: background 0.2s ease, opacity 0.2s ease !important;
+      }
+
+      &:has(.wallpaper-list-enter), &:has(.wallpaper-list-enter-done) {
+        .close-button, .category-header, .category-list, #shortcuts-section, #recent-section, #weather-section, .divider, #settings-link {
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
+      }
+
+      .close-button {
+        color: transparent !important;
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+        border: none !important;
+        background-position: center;
+        position: relative !important;
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          left: 50%;
+          transform: translateX(-50%) !important;
+          background-image: url('chrome://browser/skin/zen-icons/close.svg') !important;
+          background-repeat: no-repeat;
+          background-position: center !important;
+          -moz-context-properties: fill;
+          fill: black;
+
+          @media (prefers-color-scheme: dark) {
+            fill: white;
+          }
+        }
+
+        &:hover {
+          background-color: var(--toolbarbutton-hover-background) !important;
+        }
+      }
+    }
+
+    .toggle-button[aria-pressed="true"] {
+      background-color: var(--natsumi-primary-color) !important;
+
+      &:hover {
+        background-color: color-mix(in srgb, var(--natsumi-primary-color) 15%, #ebebeb) !important;
+
+        @media (prefers-color-scheme: dark) {
+          background-color: color-mix(in srgb, var(--natsumi-primary-color) 15%, #202020) !important;
+        }
+      }
+    }
+
+    #moz-toggle-label {
+      font-size: 18px !important;
+      font-weight: 500 !important;
+    }
+
+    .weather.active {
+      .weatherCard {
+        background-color: var(--natsumi-mat-hz-background) !important;
+        backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+        box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+
+        .weatherButtonContextMenuWrapper::after {
+          background-color: rgba(20, 20, 20, 0.2) !important;
+
+          @media (prefers-color-scheme: dark) {
+            background-color: rgba(235, 235, 235, 0.3) !important;
+          }
+        }
+
+        .weatherInfoLink, .weatherButtonContextMenuWrapper {
+          transition: background 0.2s ease;
+
+          &:hover {
+            background-color: var(--toolbarbutton-hover-background) !important;
+          }
+
+          &:has(.context-menu), &:active {
+            background-color: var(--toolbarbutton-active-background) !important;
+          }
+        }
+      }
+
+      .weatherNotAvailable {
+        background-color: color-mix(in srgb, rgb(255, 146, 146) 75%, transparent) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+        box-shadow: 0 0 10px color-mix(in srgb, rgb(255, 146, 146) 75%, black) !important;
+
+        @media (prefers-color-scheme: dark) {
+          background-color: color-mix(in srgb, rgb(255, 100, 100) 75%, transparent) !important;
+          border-color: rgba(235, 235, 235, 0.3) !important;
+          box-shadow: 0 0 10px color-mix(in srgb, rgb(255, 100, 100) 75%, white) !important;
+        }
+      }
+    }
+
+    .personalize-button {
+      transition: background 0.2s ease;
+      border-radius: 6px !important;
+    }
+
+    .lightWallpaper .personalize-button {
+      color-scheme: light !important;
+      --hover-bg: color-mix(in srgb, #202020 10%, transparent);
+    }
+
+    .darkWallpaper .personalize-button {
+      color-scheme: dark !important;
+      --hover-bg: color-mix(in srgb, #ebebeb 10%, transparent);
+    }
+
+    .personalize-button:hover {
+      background-color: var(--hover-bg) !important;
+    }
+
+    .top-site-button {
+      border-radius: 10px !important;
+
+      .tile, .top-site-icon{
+        transition: background 0.2s ease;
+      }
+
+      &:hover {
+        padding: 19px 16px 3px !important;
+        background-color: var(--natsumi-mat-hz-background) !important;
+        box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+        backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+
+        @media (prefers-color-scheme: dark) {
+          border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+
+        .tile, .top-site-icon {
+          background-color: var(--natsumi-primary-color) !important;
+        }
+      }
+
+      .title span {
+        transition: color 0.2s ease;
+      }
+    }
+
+    .search-handoff-button {
+      border-radius: 50px !important;
+      background-color: var(--natsumi-mat-hz-background) !important;
+      box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+      backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+      border: 1px solid rgba(20, 20, 20, 0.2) !important;
+
+      @media (prefers-color-scheme: dark) {
+        border-color: rgba(235, 235, 235, 0.3) !important;
+      }
+    }
+
+    /* Modals */
+
+    .modal-overlay, .modalOverlayOuter.active {
+      animation: modal-overlay-fadein 0.3s ease !important;
+      background-color: rgba(28, 27, 34, 0.45) !important;
+    }
+
+    /*noinspection CssInvalidFunction*/
+    .modal {
+      animation: modal-fadein 0.3s ease !important;
+      border-radius: 8px !important;
+      backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius)) !important;
+      background: var(--natsumi-mat-ga-background) !important;
+      box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+      border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+
+      .modal-message {
+        display: block !important;
+
+        .icon {
+          width: 100% !important;
+          margin-right: 0 !important;
+          margin-bottom: 20px !important;
+        }
+
+        .icon-modal-delete {
+          background-image: url('chrome://browser/skin/zen-icons/edit-delete.svg') !important;
+          color: white !important;
+        }
+
+        span p[data-l10n-id^="newtab-confirm-delete-history"] {
+          text-align: center !important;
+          color: white !important;
+
+          &:last-child {
+            font-weight: bold !important;
+          }
+        }
+      }
+
+      .top-site-button .title span {
+        color: black !important;
+
+        @media (prefers-color-scheme: dark) {
+          color: white !important;
+        }
+      }
+
+      /*noinspection CssInvalidFunction*/
+      .actions {
+        border-color: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+
+        /*noinspection CssInvalidFunction*/
+        button {
+          border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+          box-shadow: none !important;
+          padding: 10px !important;
+          border-radius: 50px !important;
+          appearance: none !important;
+          color: light-dark(black, white) !important;
+          transition: background-color 0.2s ease !important;
+
+          &:hover {
+            background-color: var(--toolbarbutton-hover-background) !important;
+          }
+
+          &.done {
+            background-color: color-mix(in srgb, var(--natsumi-primary-color) 50%, transparent) !important;
+          }
+        }
+      }
+
+      /*noinspection CssInvalidFunction*/
+      &:has(p[data-l10n-id^="newtab-confirm-delete-history"]) {
+        border: 1px solid rgba(235, 235, 235, 0.3) !important;
+        background: color-mix(in srgb, rgb(255, 100, 100) 75%, transparent) !important;
+        box-shadow: 0 0 10px color-mix(in srgb, rgb(255, 100, 100) 75%, light-dark(black, white)) !important;
+
+        .actions {
+          button {
+            color: white !important;
+            border-color: rgba(235, 235, 235, 0.3) !important;
+
+            &.done {
+              background-color: rgba(255, 255, 255, 0.3) !important;
+            }
+          }
+        }
+      }
+    }
+
+    /* Context menu */
+
+    .context-menu {
+      background-color: var(--natsumi-mat-hz-background) !important;
+      box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+      backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+      border: 1px solid rgba(20, 20, 20, 0.2) !important;
+
+      @media (prefers-color-scheme: dark) {
+        border-color: rgba(235, 235, 235, 0.3) !important;
+      }
+
+      .context-menu-list {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+
+        .context-menu-item {
+          button {
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+            border-radius: 6px !important;
+            transition: background-color 0.2s ease !important;
+
+            &:hover {
+              background-color: var(--toolbarbutton-hover-background) !important;
+            }
+
+            &:active {
+              background-color: var(--toolbarbutton-active-background) !important;
+            }
+          }
+        }
+
+        /*noinspection CssInvalidFunction*/
+        .separator {
+          width: 95% !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          border-color: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+        }
+      }
+    }
+    
+    button.toggle-button {
+      /* before pseudoelement has the "toggle" */
+      --color-off: #ff6b6b;
+      --color-on: #11ad79;
+      --color-set: var(--color-off);
+      --natsumi-primary-color: var(--color-set) !important;
+
+      background-color: var(--natsumi-mat-ga-background) !important;
+      border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 4px var(--natsumi-mat-ga-shadow-color) !important;
+
+      &:hover {
+        background-color: var(--natsumi-mat-ga-background) !important;
+      }
+
+      &::before {
+        background-color: var(--color-off) !important;
+        transition: background-color 0.3s ease, translate 0.3s ease, height 0.3s ease, fill 0.3s ease, background-size 0.3s ease !important;
+        -moz-context-properties: fill;
+        fill: white;
+        background-size: 10px !important;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url('chrome://browser/skin/zen-icons/close.svg');
+      }
+
+      &[aria-pressed="false"] {
+        &:active {
+          &::before {
+            translate: 2px !important;
+            height: 8px !important;
+            background-size: 6px !important;
+          }
+        }
+      }
+
+      &[aria-pressed="true"] {
+        --color-set: var(--color-on) !important;
+        --toggle-bg-color: var(--color-set);
+        --dot-color: white;
+
+        @media not -moz-pref("natsumi.theme.fill-toggle-when-on") {
+          --toggle-bg-color: var(--natsumi-mat-ga-background);
+          --dot-color: var(--color-on);
+        }
+
+        background-color: var(--toggle-bg-color) !important;
+
+        &:hover {
+          background-color: var(--toggle-bg-color) !important;
+        }
+
+        &::before {
+          background-color: var(--dot-color) !important;
+          background-image: url('chrome://browser/skin/zen-icons/checkmark.svg');
+          fill: var(--color-set);
+        }
+
+        &:active {
+          &::before {
+            translate: calc(var(--toggle-dot-transform-x) - 2px) !important;
+            height: 8px !important;
+            background-size: 6px !important;
+          }
+        }
+      }
+    }
+  }
+
+  /* PB patches */
+  @-moz-document url-prefix(about:privatebrowsing) {
+    body, #search-handoff-button {
+      --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, #202020 80%);
+      --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, #202020 70%);
+      --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 1%, #202020 99%);
+      --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+
+      @media -moz-pref('zen.theme.color-prefs.colorful') {
+        --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+        --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 40%, black 60%);
+        --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 15%, black 85%);
+        --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+      }
+    }
+
+    body {
+      background-color: color-mix(in srgb, var(--natsumi-colors-tertiary) 70%, #0f0f0f 30%) !important;
+    }
+
+    .fake-textbox {
+      color: white !important;
+    }
+
+    .fake-caret {
+      background-color: white !important;
+    }
+  }
+}
+  @-moz-document url-prefix(about:preferences) {
+  /* Patch layout list width on small screens */
+  #zenLayoutList {
+    flex-wrap: wrap !important;
+  }
+}
+  * {
+  /*noinspection CssInvalidFunction*/
+  @media -moz-pref("natsumi.global.highlight-accent-color") {
+    &::-moz-selection, &::selection {
+      background: color-mix(in srgb, var(--natsumi-colors-primary) 40%, transparent) !important;
+    }
+  }
+}
+}
